@@ -45,7 +45,7 @@ module.exports = {
       {
         address: '456 Lighthouse Rd',
         city: 'Coastal Serenity',
-        state: 'QLD,',
+        state: 'QLD',
         country: 'Australia',
         lat: -27.4698,
         lng: 153.0251,

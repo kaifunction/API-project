@@ -7,6 +7,9 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 
+// //test
+// const { Spot, User } = require('../backend/db/models');
+// //test
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -50,9 +53,25 @@ if (!isProduction) {
 
   app.use(routes); // Connect all the routes
 
+  // //test
+  // app.get('api/users/:id', async (req, res) => {
+  //   try {
+  //     const userWithSpots = await User.findByPk(req.params.id, {
+  //       include: Spot,
+  //     });
 
+  //     if (userWithSpots) {
+  //       res.json(userWithSpots);
+  //     } else {
+  //       res.status(404).json({ message: 'User not found' });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     res.status(500).json({ message: 'Internal Server Error' });
+  //   }
+  // });
 
-
+  // //test
 
 
 
