@@ -6,34 +6,22 @@ if (process.env.NODE_ENV === 'production') {
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('ReviewImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName:{
-        type: Sequelize.STRING(30),
-        allowNull: false
+      reviewId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Reviews',
+          key: 'id'
+        }
       },
-      lastName:{
-        type: Sequelize.STRING(30),
-        allowNull: false
-      },
-      username: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
-      },
-      email: {
-        type: Sequelize.STRING(256),
-        allowNull: false,
-        unique: true
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
-        allowNull: false
+      url: {
+        type: Sequelize.STRING(255)
       },
       createdAt: {
         allowNull: false,
@@ -48,7 +36,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Users';
-    return queryInterface.dropTable(options);
+    options.tableName = 'ReviewImages';
+    return queryInterface.dropTable(options)
   }
 };
