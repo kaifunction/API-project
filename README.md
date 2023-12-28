@@ -4,7 +4,7 @@
 
 ![db-schema]
 
-[db-schema]: ./images/example.png
+[db-schema]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/airbnb-db-schema.png
 
 ## API Documentation
 
