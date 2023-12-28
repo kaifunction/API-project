@@ -21,6 +21,7 @@ module.exports = {
     */
     await Spot.bulkCreate([
       {
+        ownerId: 2,
         address: '234 Redwood Lane',
         city: 'Enchanted Haven',
         state: 'California',
@@ -32,6 +33,7 @@ module.exports = {
         price: 150
       },
       {
+        ownerId: 1,
         address: '789 Jade Street',
         city: 'Zen Gardens',
         state: 'Beijing',
@@ -43,6 +45,7 @@ module.exports = {
         price: 798
       },
       {
+        ownerId: 4,
         address: '456 Lighthouse Rd',
         city: 'Coastal Serenity',
         state: 'QLD',
@@ -54,6 +57,7 @@ module.exports = {
         price: 180
       },
       {
+        ownerId: 3,
         address: '101 Mountain View Drive',
         city: 'Alpine Retreat',
         state: 'CO',
