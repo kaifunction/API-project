@@ -21,15 +21,19 @@ module.exports = {
     */
     await ReviewImage.bulkCreate([
       {
+        reviewId: 1,
         url: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8fDA%3D',
       },
       {
+        reviewId: 2,
         url: 'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-760w,f_auto,q_auto:best/newscms/2019_24/1448814/how-size-doesnt-make-you-happier-today-main-190614.jpg',
       },
       {
+        reviewId: 3,
         url: 'https://images.unsplash.com/photo-1598228723793-52759bba239c?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGhvdXNlfGVufDB8fDB8fHww',
       },
       {
+        reviewId: 4,
         url: 'https://t3.ftcdn.net/jpg/01/57/36/74/360_F_157367489_FSqP231EvpCB9fqD5s5PhCp8MOuEcfih.jpg',
       }
     ], { validate: true })
