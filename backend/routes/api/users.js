@@ -61,7 +61,7 @@ router.post(
               });
             }
           }
-          throw err;
+          // throw err;
         }
 
       const safeUser = {
