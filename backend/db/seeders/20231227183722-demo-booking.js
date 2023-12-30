@@ -44,16 +44,10 @@ module.exports = {
         startDate: '2024-12-20',
         endDate: '2024-12-29'
       },
-    ])
+    ], { validate: true })
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     options.tableName = 'Bookings';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {}, {})

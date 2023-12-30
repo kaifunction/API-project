@@ -40,7 +40,7 @@ module.exports = {
         url: 'https://assets-news.housing.com/news/wp-content/uploads/2022/04/07013406/ELEVATED-HOUSE-DESIGN-FEATURE-compressed.jpg',
         preview: true
       }
-    ])
+    ], { validate: true })
   },
 
   async down (queryInterface, Sequelize) {
