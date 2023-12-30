@@ -12,19 +12,27 @@ const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email'),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
-      .withMessage('Please provide a username with at least 4 characters.'),
+      .withMessage('Username is required'),
     check('username')
       .not()
       .isEmail()
-      .withMessage('Username cannot be an email.'),
+      .withMessage('Username is required'),
     check('password')
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
+    check('firstName')
+      .exists({ checkFalsy: true })
+      .not()
+      .withMessage('First Name is required'),
+    check('lastName')
+      .exists({ checkFalsy: true })
+      .not()
+      .withMessage('Last Name is required'),
     handleValidationErrors
   ];
 
@@ -33,12 +41,33 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-      const { email, password, username } = req.body;
+      const { firstName, lastName, email, password, username } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({ email, username, hashedPassword });
+
+      let user;
+      try {
+        user = await User.create({ firstName, lastName, email, username, hashedPassword });
+      } catch(err) {
+          if (err.name === 'SequelizeUniqueConstraintError') {
+            if (err.fields.includes('email')) {
+              return res.status(500).json({
+                message: 'User already exists',
+                errors: { email: 'User with that email already exists' }
+              });
+            } else if (err.fields.includes('username')) {
+              return res.status(500).json({
+                message: 'User already exists',
+                errors: { username: 'User with that username already exists' }
+              });
+            }
+          }
+          throw err;
+        }
 
       const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username,
       };
