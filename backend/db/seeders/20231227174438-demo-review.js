@@ -50,7 +50,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete(options, {
+    return queryInterface.bulkDelete(options, {
       stars: {
         [Op.in]: [1, 2, 3, 4, 5]
       }
