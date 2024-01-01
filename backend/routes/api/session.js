@@ -24,7 +24,7 @@ const validateLogin = [
 
 
 // Log in
-router.post('/', requireAuth, validateLogin, async (req, res, next) => {
+router.post('/', validateLogin, async (req, res, next) => {
       const { credential, password } = req.body;
       // let user;
       // try {
