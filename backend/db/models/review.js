@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'reviewId',
         onDelete: 'CASCADE',
         hooks: true
+      });
+
+      Review.belongsTo(models.Spot, {
+        foreignKey: 'spotId'
       })
     }
   }

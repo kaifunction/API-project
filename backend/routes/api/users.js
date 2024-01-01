@@ -21,10 +21,10 @@ const validateSignup = [
       .not()
       .isEmail()
       .withMessage('Username is required'),
-    check('password')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 6 })
-      .withMessage('Password must be 6 characters or more.'),
+    // check('password')
+    //   .exists({ checkFalsy: true })
+    //   .isLength({ min: 6 })
+    //   .withMessage('Password must be 6 characters or more.'),
     check('firstName')
       .exists({ checkFalsy: true })
       .not()
