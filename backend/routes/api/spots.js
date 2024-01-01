@@ -11,6 +11,54 @@ const router = express.Router();
 const validateSpot = [handleValidationErrors]
 
 
+//Get details of a Spot from an id
+router.get('/:spotId(\\d+)', async(req, res)=>{
+     const spots = await Spot.findByPk(req.params.spotId, {
+          include: [
+               {
+                    model: SpotImage,
+                    attributes: ['id', 'url', 'preview'],
+                    // as: 'previewImage'
+               },
+               {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName'],
+                    // as: 'owner'
+               }
+          ],
+     });
+
+     if(!spots){
+          res.status(404).json({
+               message: "Spot couldn't be found"
+          });
+     };
+
+     spots.dataValues.Owner = spots.dataValues.User
+     delete spots.dataValues.User;
+
+
+     const reviews = await Review.findAll({
+       where: {
+         spotId: req.params.spotId
+       }
+     });
+
+     let ratingSum = 0;
+     let ratingCount = 0;
+     for (const review of reviews) {
+          ratingSum += review.stars;
+          ratingCount++;
+     };
+
+     spots.dataValues.numReviews = ratingCount;
+     spots.dataValues.avgStarRating = ratingSum / ratingCount;
+
+     res.json(spots)
+})
+
+
+
 //Get All Spots Owned by the Current User
 router.get('/current', requireAuth, async(req, res)=> {
 
