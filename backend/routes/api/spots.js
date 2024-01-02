@@ -200,7 +200,7 @@ router.get('/current', requireAuth, async(req, res)=> {
                     attributes: ['url'],
                     // as: 'previewImage'
                }
-          ],
+          ]
      });
      // console.log(spots)
 
