@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       //   hooks: true
       // });
 
-      // User.hasMany(models.Review, {
-      //   foreignKey: 'userId',
-      //   onDelete: 'CASCADE',
-      //   hooks: true
-      // });
+      User.hasMany(models.Review, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
 
       User.belongsToMany(models.Spot, {
         through: models.Booking,
@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'spotId'
       });
 
-      User.belongsToMany(models.Spot, {
-        through: models.Review,
-        foreignKey: 'userId',
-        otherKey: 'spotId'
-      });
+      // User.belongsToMany(models.Spot, {
+      //   through: models.Review,
+      //   foreignKey: 'userId',
+      //   otherKey: 'spotId'
+      // });
     }
   }
   User.init(

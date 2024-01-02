@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'userId'
       });
 
-      Spot.belongsToMany(models.User, {
-        through: models.Review,
-        foreignKey: 'spotId',
-        otherKey: 'userId'
-      });
+      // Spot.belongsToMany(models.User, {
+      //   through: models.Review,
+      //   foreignKey: 'spotId',
+      //   otherKey: 'userId'
+      // });
 
       Spot.hasMany(models.SpotImage, {
         foreignKey: 'spotId',
@@ -37,11 +37,12 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true
       });
 
-      // Spot.hasMany(models.Review, {
-      //   foreignKey: 'spotId',
-      //   onDelete: 'CASCADE',
-      //   hooks: true
-      // });
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+
       // Spot.hasMany(models.Review, {
       //   foreignKey: 'spotId'
       // });
