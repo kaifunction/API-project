@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true
       });
 
-      Review.belongsTo(models.Spot, {
-        foreignKey: 'spotId'
-      });
+      // Review.belongsTo(models.Spot, {
+      //   foreignKey: 'spotId'
+      // });
 
-      Review.belongsTo(models.User, {
-        foreignKey: 'userId'
-      })
+      // Review.belongsTo(models.User, {
+      //   foreignKey: 'userId'
+      // })
     }
   }
   Review.init({
