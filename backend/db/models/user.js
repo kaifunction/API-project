@@ -16,28 +16,29 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true
       });
 
-      User.hasMany(models.Booking, {
-        foreignKey: 'userId',
-        onDelete: 'CASCADE',
-        hooks: true
-      });
-
-      User.hasMany(models.Review, {
-        foreignKey: 'userId',
-        onDelete: 'CASCADE',
-        hooks: true
-      });
-      // User.belongsToMany(models.Spot, {
-      //   through: models.Booking,
+      // User.hasMany(models.Booking, {
       //   foreignKey: 'userId',
-      //   otherKey: 'spotId'
+      //   onDelete: 'CASCADE',
+      //   hooks: true
       // });
 
-      // User.belongsToMany(models.Spot, {
-      //   through: models.Review,
+      // User.hasMany(models.Review, {
       //   foreignKey: 'userId',
-      //   otherKey: 'spotId'
-      // })
+      //   onDelete: 'CASCADE',
+      //   hooks: true
+      // });
+
+      User.belongsToMany(models.Spot, {
+        through: models.Booking,
+        foreignKey: 'userId',
+        otherKey: 'spotId'
+      });
+
+      User.belongsToMany(models.Spot, {
+        through: models.Review,
+        foreignKey: 'userId',
+        otherKey: 'spotId'
+      });
     }
   }
   User.init(
