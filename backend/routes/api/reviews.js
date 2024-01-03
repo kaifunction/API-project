@@ -1,7 +1,7 @@
 const express = require('express');
 // const bcrypt = require('bcryptjs');
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie, requireAuth,  restoreUser } = require('../../utils/auth');
 const { Review, User, ReviewImage, Spot, SpotImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -21,7 +21,7 @@ const validateCreateSpotReivew = [
 ];
 
 // Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', requireAuth, async(req, res)=>{
+router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res)=>{
      const { url } = req.body;
 
      const review = await Review.findByPk(req.params.reviewId, {
@@ -58,7 +58,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res)=>{
 })
 
 //Edit a Review
-router.put('/:reviewId(\\d+)', requireAuth, validateCreateSpotReivew, async(req, res)=>{
+router.put('/:reviewId(\\d+)', restoreUser, requireAuth, validateCreateSpotReivew, async(req, res)=>{
      const { review, stars } = req.body;
 
      try{
@@ -88,7 +88,7 @@ router.put('/:reviewId(\\d+)', requireAuth, validateCreateSpotReivew, async(req,
 })
 
 //Delete a Review
-router.delete('/:reviewId(\\d+)', requireAuth, async(req, res)=>{
+router.delete('/:reviewId(\\d+)', restoreUser, requireAuth, async(req, res)=>{
      const review = await Review.findByPk(req.params.reviewId, {
           where : {
                userId : req.user.id,
@@ -110,7 +110,7 @@ router.delete('/:reviewId(\\d+)', requireAuth, async(req, res)=>{
 
 
 //Get all Reviews of the Current User
-router.get('/current', requireAuth, async(req, res)=>{
+router.get('/current', restoreUser, requireAuth, async(req, res)=>{
      const reviews = await Review.findAll({
           where : {
                userId : req.user.id,

@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review, ReviewImage, Sequelize } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage, Booking, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -62,8 +62,20 @@ const validateCreateSpotReivew = [
   handleValidationErrors
 ];
 
+
+// const validateCreateBookingDate = [
+//      check('startDate')
+//        .exists({ checkFalsy: true })
+//        .isLength({ min: 1, max: 500 })
+//        .withMessage('Review text is required'),
+//      check('endDate')
+//        .isFloat({ min: 1, max: 5 })
+//        .withMessage('Stars must be an integer from 1 to 5'),
+//      handleValidationErrors
+// ];
+
 //Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, async(req, res)=>{
+router.post('/:spotId/images', restoreUser, requireAuth, async(req, res)=>{
      const { url, preview } = req.body;
 
      const spot = await Spot.findByPk(req.params.spotId,{
@@ -151,7 +163,7 @@ router.get('/:spotId/reviews', async(req, res)=>{
 
 
 //Create a Review for a Spot based on the Spot's id
-router.post('/:spotId/reviews', requireAuth, validateCreateSpotReivew, async(req, res)=>{
+router.post('/:spotId/reviews', restoreUser, requireAuth, validateCreateSpotReivew, async(req, res)=>{
      const { review, stars } = req.body;
 
      try{
@@ -188,6 +200,63 @@ router.post('/:spotId/reviews', requireAuth, validateCreateSpotReivew, async(req
           }
      }
 });
+
+
+
+
+//Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', restoreUser, requireAuth, async(req, res)=>{
+     const spotId = req.params.spotId
+     const spot = await Spot.findByPk(spotId);
+
+     if (!spot) {
+          return res.status(404).json({
+            message: "Spot couldn't be found"
+          });
+     };
+
+     const owner = spot.ownerId
+     const user = req.user.id
+
+     let bookings;
+
+     if(owner === user){
+          bookings = await Booking.findAll({
+               where: {
+                    spotId
+               },
+               include: [
+                    {
+                         model: User,
+                         attributes: ['id', 'firstName', 'lastName']
+                    }
+               ]
+          });
+     } else {
+          bookings = await Booking.findAll({
+               where: {
+                    spotId,
+               },
+               attributes: ['spotId', 'startDate', 'endDate']
+          })
+     };
+
+
+     res.json({
+          Bookings: bookings
+     })
+});
+
+
+
+//Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', restoreUser, requireAuth, async(req, res)=>{
+     res.json({
+          message: 'success'
+     })
+})
+
+
 
 
 //Get details of a Spot from an id
@@ -236,7 +305,7 @@ router.get('/:spotId(\\d+)', async(req, res)=>{
 
 
 //Edit a Spot
-router.put('/:spotId(\\d+)',requireAuth, validateCreateSpot, async(req, res)=>{
+router.put('/:spotId(\\d+)', restoreUser, requireAuth, validateCreateSpot, async(req, res)=>{
      const { address, city, state, country, lat, lng, name, description, price } = req.body
      const spot = await Spot.findByPk(req.params.spotId, {
           where : {
@@ -268,7 +337,7 @@ router.put('/:spotId(\\d+)',requireAuth, validateCreateSpot, async(req, res)=>{
 
 
 //Delete a Spot
-router.delete('/:spotId(\\d+)',requireAuth, async(req, res)=>{
+router.delete('/:spotId(\\d+)', restoreUser, requireAuth, async(req, res)=>{
      const spot = await Spot.findByPk(req.params.spotId, {
           where : {
                ownerId : req.user.id,
@@ -291,7 +360,7 @@ router.delete('/:spotId(\\d+)',requireAuth, async(req, res)=>{
 
 
 //Get All Spots Owned by the Current User
-router.get('/current', requireAuth, async(req, res)=> {
+router.get('/current', restoreUser, requireAuth, async(req, res)=> {
 
      let spots = await Spot.findAll({
           where : {
@@ -385,7 +454,7 @@ router.get('/', async(req, res)=>{
 
 
 //Create a Spot
-router.post('/', requireAuth, validateCreateSpot, async(req, res)=>{
+router.post('/', restoreUser, requireAuth, validateCreateSpot, async(req, res)=>{
      const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
      try{
