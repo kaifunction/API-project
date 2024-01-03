@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review, Sequelize } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -51,6 +51,17 @@ const validateCreateSpot = [
    ];
 
 
+const validateCreateSpotReivew = [
+  check('review')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 500 })
+    .withMessage('Review text is required'),
+  check('stars')
+    .isFloat({ min: 1, max: 5 })
+    .withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+];
+
 //Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async(req, res)=>{
      const { url, preview } = req.body;
@@ -83,7 +94,100 @@ router.post('/:spotId/images', requireAuth, async(req, res)=>{
        preview: newImage.preview
      };
      res.json(responseData)
-})
+});
+
+
+//Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async(req, res)=>{
+     const spot = await Spot.findByPk(req.params.spotId, {
+          include: [
+            {
+              model: Review,
+              include: [
+                {
+                  model: ReviewImage,
+                  attributes: ['id', 'url']
+                }
+              ]
+            },
+            {
+              model: User,
+              attributes: ['id', 'firstName', 'lastName']
+            }
+          ]
+        });
+
+        if (!spot) {
+          return res.status(404).json({
+            message: "Spot couldn't be found"
+          });
+        }
+
+        const formattedReviews = spot.Reviews.map(review => {
+          return {
+            id: review.id,
+            userId: review.userId,
+            spotId: review.spotId,
+            review: review.review,
+            stars: review.stars,
+            createdAt: review.createdAt,
+            updatedAt: review.updatedAt,
+            User: {
+              id: spot.User.id,
+              firstName: spot.User.firstName,
+              lastName: spot.User.lastName,
+            },
+            ReviewImages: review.ReviewImages.map(image => ({
+              id: image.id,
+              url: image.url,
+            })),
+          };
+        });
+
+     res.json({
+          Review: formattedReviews
+     })
+});
+
+
+//Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', requireAuth, validateCreateSpotReivew, async(req, res)=>{
+     const { review, stars } = req.body;
+
+     try{
+          const spot = await Spot.findByPk(req.params.spotId, {
+               include: {
+                    model: Review
+               }
+          });
+
+          if (!spot) {
+            return res.status(404).json({
+              message: "Spot couldn't be found"
+            });
+          };
+
+          const existingReview = spot.Reviews.find((review) => review.userId === req.user.id);
+          if (existingReview) {
+               return res.status(403).json({
+                     message: 'User already has a review for this spot'
+               });
+          }
+
+          const newReview = await Review.create({
+               userId: req.user.id,
+               spotId: spot.id,
+               review,
+               stars
+          });
+
+          res.status(201).json(newReview)
+     } catch (err) {
+          if (err instanceof ValidationError) {
+            res.status(400).json({ message: 'Validation error', errors: err.errors });
+          }
+     }
+});
 
 
 //Get details of a Spot from an id
@@ -139,7 +243,6 @@ router.put('/:spotId(\\d+)',requireAuth, validateCreateSpot, async(req, res)=>{
                ownerId : req.user.id,
           }
      })
-     // console.log(spot)
 
      if(!spot){
           res.status(404).json({
