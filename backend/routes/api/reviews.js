@@ -51,7 +51,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res)=>{
           url
      })
 
-     res.status(201).json({
+     res.status(200).json({
           id: newReviewImage.id,
           url: newReviewImage.url
      })
@@ -70,7 +70,7 @@ router.put('/:reviewId(\\d+)', requireAuth, validateCreateSpotReivew, async(req,
 
           if(!reviewByPk){
                res.status(404).json({
-                    message: "Spot couldn't be found"
+                    message: "Review couldn't be found"
                });
           };
 
@@ -97,7 +97,7 @@ router.delete('/:reviewId(\\d+)', requireAuth, async(req, res)=>{
 
      if(!review){
           res.status(404).json({
-               message: "Spot couldn't be found"
+               message: "Review couldn't be found"
           });
      };
 

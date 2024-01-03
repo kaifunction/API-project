@@ -145,7 +145,7 @@ router.get('/:spotId/reviews', async(req, res)=>{
         });
 
      res.json({
-          Review: formattedReviews
+          Reviews: formattedReviews
      })
 });
 
@@ -169,7 +169,7 @@ router.post('/:spotId/reviews', requireAuth, validateCreateSpotReivew, async(req
 
           const existingReview = spot.Reviews.find((review) => review.userId === req.user.id);
           if (existingReview) {
-               return res.status(403).json({
+               return res.status(500).json({
                      message: 'User already has a review for this spot'
                });
           }
