@@ -470,12 +470,14 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=> {
           }
 
           spot.dataValues.avgRating = ratingSum / ratingCount;
+
           // console.log(spot.dataValues.SpotImages[0].url)
-          if(!spot.dataValues.SpotImages[0].url){
-               return res.json({
-                    message: 'Need to add an image to the Spot'
-               })
-          };
+
+          // if(!spot.dataValues.SpotImages[0].url){
+          //      return res.json({
+          //           message: 'Need to add an image to the Spot'
+          //      })
+          // };
           spot.dataValues.previewImage = spot.dataValues.SpotImages[0].url;
           delete spot.dataValues.SpotImages;
      }
