@@ -131,7 +131,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
                          {
                            model: SpotImage,
                            attributes: ['url']
-                           //url有问题 和 Spot的Get all 都有问题
+                           //url有问题
                          },
                     ],
                },
@@ -142,6 +142,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
           ]
      });
 
+     console.log('URL', reviews[0].ReviewImages[0].url)
      const formattedReviews = reviews.map(review => ({
           id: review.id,
           userId: review.userId,
@@ -168,10 +169,10 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
             price: review.Spot.price,
             previewImage: review.Spot.SpotImages[0].url
           },
-          ReviewImages: review.ReviewImages.map(image => ({
-            id: image.id,
-            url: image.url,
-          })),
+          "ReviewImages": review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
+               id: image ? image.id : '',
+               url: image && image.url !== undefined ? image.url : null,
+          })) : [{ id: '', url: null }],
         }));
 
      res.json({
