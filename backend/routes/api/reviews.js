@@ -142,7 +142,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
           ]
      });
 
-     console.log('URL', reviews[0].ReviewImages[0].url)
+
      const formattedReviews = reviews.map(review => ({
           id: review.id,
           userId: review.userId,
