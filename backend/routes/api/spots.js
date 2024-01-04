@@ -110,6 +110,10 @@ router.post('/:spotId/images', restoreUser, requireAuth, async(req, res)=>{
           });
      };
 
+     if(!(spot.ownerId === req.user.id)) return res.status(403).json({
+          message: 'Spot must belong to the current user'
+     })
+
      const newImage = await SpotImage.create({
           spotId: spot.id,
           url,
@@ -145,13 +149,13 @@ router.get('/:spotId/reviews', async(req, res)=>{
           ]
         });
 
-        if (!spot) {
-          return res.status(404).json({
+     if (!spot) {
+        return res.status(404).json({
             message: "Spot couldn't be found"
-          });
-        }
+        });
+     }
 
-        const formattedReviews = spot.Reviews.map(review => {
+     const formattedReviews = spot.Reviews.map(review => {
           return {
             id: review.id,
             userId: review.userId,
@@ -170,7 +174,7 @@ router.get('/:spotId/reviews', async(req, res)=>{
               url: image.url,
             })),
           };
-        });
+     });
 
      res.json({
           Reviews: formattedReviews
@@ -313,29 +317,6 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, validateCreateBooking
                }
           });
      }
-     // console.log('New', startDate)
-     // console.log('BookedDate', Booking.dataValues.startDate)
-
-     // // console.log(bookings)
-     // let hasConflict = false;
-
-     // bookings.forEach(booking => {
-     //   if (booking.startDate < endDate && booking.endDate > startDate) {
-     //     hasConflict = true;
-     //   }
-     // });
-
-     // if (hasConflict) {
-     //   return res.status(403).json({
-     //     message: 'Sorry, this spot is already booked for the specified dates',
-     //     errors: {
-     //       startDate: 'Start date conflicts with an existing booking',
-     //       endDate: 'End date conflicts with an existing booking'
-     //     }
-     //   });
-     // }
-
-
 
      const newBooking = await Booking.create({
           spotId: spotId,
@@ -409,6 +390,10 @@ router.put('/:spotId(\\d+)', restoreUser, requireAuth, validateCreateSpot, async
           });
      };
 
+     if(!(spot.ownerId === req.user.id)) return res.status(403).json({
+          message: 'Spot must belong to the current user'
+     })
+
      if(address) spot.address = address
      if(city) spot.city = city
      if(state) spot.state = state
@@ -439,6 +424,10 @@ router.delete('/:spotId(\\d+)', restoreUser, requireAuth, async(req, res)=>{
                message: "Spot couldn't be found"
           });
      };
+
+     if(!(spot.ownerId === req.user.id)) return res.status(403).json({
+          message: 'Spot must belong to the current user'
+     })
 
      await spot.destroy();
 
