@@ -40,67 +40,76 @@ const validateCreateBookingDate = [
 
 //Edit a Booking
 router.put('/:bookingId(\\d+)', restoreUser, requireAuth, validateCreateBookingDate, async(req, res)=>{
-     const { startDate, endDate } = req.body;
-     const booking = await Booking.findByPk(req.params.bookingId);
-     // console.log(req.user.id)
-     // console.log(booking.userId)
-     // console.log(booking)
+     try {
+          const { startDate, endDate } = req.body;
+          const booking = await Booking.findByPk(req.params.bookingId);
+          // console.log(req.user.id)
+          // console.log(booking.userId)
+          // console.log(booking)
 
-     if(!booking){
-          res.status(404).json({
-               message: "Booking couldn't be found"
-          });
-     };
+          if(!booking){
+               res.status(404).json({
+                    message: "Booking couldn't be found"
+               });
+          };
 
-     if(!(booking.userId === req.user.id)) return res.status(403).json({
-          message: 'Booking must belong to the current user'
-     })
-
-     // console.log(new Date())
-     if(booking.endDate < new Date()){
-          return res.status(403).json({
-               message: "Past bookings can't be modified"
+          if(!(booking.userId === req.user.id)) return res.status(403).json({
+               message: 'Booking must belong to the current user'
           })
-     }
 
-     const existingBooking = await Booking.findOne({
-          where: {
-               [Op.or]: [
-                    {startDate: {
-                         [Op.lte]: startDate, [Op.gt]: endDate
-                    }},
-
-                    {endDate: {
-                         [Op.gte]: startDate, [Op.lt]: endDate
-                    }},
-
-                    {
-                         startDate: { [Op.lte]: startDate },
-                         endDate: { [Op.gte]: endDate }
-                    }
-               ]
+          // console.log(new Date())
+          if(new Date(endDate) < new Date().getTime){
+               return res.status(403).json({
+                    message: "Past bookings can't be modified"
+               })
           }
-     })
 
-     if(existingBooking){
-          return res.status(403).json({
-               message: 'Sorry, this spot is already booked for the specified dates',
-               errors: {
-                 startDate: 'Start date conflicts with an existing booking',
-                 endDate: 'End date conflicts with an existing booking'
+          const existingBooking = await Booking.findOne({
+               where: {
+                    [Op.or]: [
+                         {startDate: {
+                              [Op.lte]: startDate, [Op.gt]: endDate
+                         }},
+
+                         {endDate: {
+                              [Op.gte]: startDate, [Op.lt]: endDate
+                         }},
+
+                         {
+                              startDate: { [Op.lte]: startDate },
+                              endDate: { [Op.gte]: endDate }
+                         }
+                    ]
                }
-          });
+          })
+
+          if(existingBooking){
+               return res.status(403).json({
+                    message: 'Sorry, this spot is already booked for the specified dates',
+                    errors: {
+                      startDate: 'Start date conflicts with an existing booking',
+                      endDate: 'End date conflicts with an existing booking'
+                    }
+               });
+          }
+
+
+          if(startDate) booking.startDate = startDate
+          if(endDate) booking.endDate = endDate
+
+          await booking.save();
+
+
+
+          res.json(booking)
+
+     }catch(error){
+        const errors = handleValidationErrors(error);
+        return res.status(400).json({
+            message: 'Bad Request',
+            errors: errors
+        });
      }
-
-
-     if(startDate) booking.startDate = startDate
-     if(endDate) booking.endDate = endDate
-
-     await booking.save();
-
-
-
-     res.json(booking)
 })
 
 
