@@ -448,7 +448,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=> {
           include: [
                {
                     model: SpotImage,
-                    attributes: ['url'],
+                    // attributes: ['url'],
                     // as: 'previewImage'
                }
           ]
