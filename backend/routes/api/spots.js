@@ -169,10 +169,10 @@ router.get('/:spotId/reviews', async(req, res)=>{
               firstName: spot.User.firstName,
               lastName: spot.User.lastName,
             },
-            ReviewImages: review.ReviewImages.map(image => ({
-              id: image.id,
-              url: image.url,
-            })),
+            ReviewImages: review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
+               id: image ? image.id : '',
+               url: image && image.url !== undefined ? image.url : null,
+          })) : [{ id: '', url: null }],
           };
      });
 
