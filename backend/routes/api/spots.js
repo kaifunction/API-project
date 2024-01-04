@@ -90,6 +90,64 @@ const validateCreateBookingDate = [
      handleValidationErrors
 ];
 
+
+const validatePageSize = [
+     check('page')
+     //   .isInt({ min: 1, max: 10 })
+       .optional()
+       .custom((value) => {
+          if(value < 1){
+               throw new Error('Page must be greater than or equal to 1')
+          }
+          if(value > 10){
+               throw new Error('Page must be less than or equal to 10')
+          }
+          return value
+       }),
+     check('size')
+       .optional()
+       .custom((value) => {
+          if(value < 1){
+               throw new Error('Size must be greater than or equal to 1')
+          }
+          if(value > 20){
+               throw new Error('Size must be less than or equal to 20')
+          }
+          return value
+       }),
+     check('maxLat')
+       .optional()
+       .isFloat({ max: 90 })
+       .withMessage('Maximum latitude is invalid'),
+
+     check('minLat')
+       .optional()
+       .isFloat({ min: -90 })
+       .withMessage('Minimum latitude is invalid'),
+
+     check('minLng')
+       .optional()
+       .isFloat({ min: -180 })
+       .withMessage('Minimum longitude is invalid'),
+
+     check('maxLng')
+       .optional()
+       .isFloat({ max: 180 })
+       .withMessage('Maximum longitude is invalid'),
+
+     check('minPrice')
+       .optional()
+       .isInt({ min: 0 })
+       .withMessage('Minimum price must be greater than or equal to 0'),
+
+     check('maxPrice')
+       .optional()
+       .isInt({ min: 0 })
+       .withMessage('Maximum price must be greater than or equal to 0'),
+
+     handleValidationErrors
+];
+
 //Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', restoreUser, requireAuth, async(req, res)=>{
      const { url, preview } = req.body;
@@ -488,9 +546,37 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=> {
 
 
 //Get All Spots
-router.get('/', async(req, res)=>{
+router.get('/', validatePageSize, async(req, res)=>{
+
+     const { page = 1, size = 20, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+     // if(!page) page = 1;
+     // if(!size) size = 20;
+
+     const whereCondition = {};
+
+     if(minLat && maxLat) {
+          whereCondition.lat = {
+               [Op.between]: [minLat, maxLat]
+          }
+     }
+
+     if(minLng && maxLng) {
+          whereCondition.lng = {
+               [Op.between]: [minLng, maxLng]
+          }
+     }
+
+     if(minPrice !== undefined && maxPrice !== undefined) {
+          whereCondition.price = {
+               [Op.between]: [minPrice, maxPrice]
+          }
+     }
 
      let spots = await Spot.findAll({
+          offset: (page - 1) * size,
+          limit: size,
+          where: whereCondition,
           include: [
                {
                     model: SpotImage,
@@ -528,9 +614,13 @@ router.get('/', async(req, res)=>{
      })
 
      res.json({
-          "Spots": spots
+          "Spots": spots,
+          page,
+          size
      })
-})
+});
+
+
 
 
 //Create a Spot
@@ -560,7 +650,6 @@ router.post('/', restoreUser, requireAuth, validateCreateSpot, async(req, res)=>
              }
      }
 })
-
 
 
 
