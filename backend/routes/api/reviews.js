@@ -25,9 +25,9 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res)=>{
      const { url } = req.body;
 
      const review = await Review.findByPk(req.params.reviewId, {
-          where : {
-               userId : req.user.id,
-          },
+          // where : {
+          //      userId : req.user.id,
+          // },
           include: {
                model: ReviewImage
           }
@@ -39,6 +39,10 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res)=>{
                message: "Review couldn't be found"
           });
      };
+
+     if(!(review.userId === req.user.id)) return res.status(403).json({
+          message: 'Review must belong to the current user'
+     })
 
      if (review.ReviewImages.length >= 10) {
           return res.status(403).json({
@@ -61,12 +65,8 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res)=>{
 router.put('/:reviewId(\\d+)', restoreUser, requireAuth, validateCreateSpotReivew, async(req, res)=>{
      const { review, stars } = req.body;
 
-     try{
-          const reviewByPk = await Review.findByPk(req.params.reviewId, {
-               where : {
-                    userId : req.user.id,
-               },
-          });
+     // try{
+          const reviewByPk = await Review.findByPk(req.params.reviewId);
 
           if(!reviewByPk){
                res.status(404).json({
@@ -74,32 +74,36 @@ router.put('/:reviewId(\\d+)', restoreUser, requireAuth, validateCreateSpotReive
                });
           };
 
+          if(!(reviewByPk.userId === req.user.id)) return res.status(403).json({
+               message: 'Review must belong to the current user'
+          })
+
           if(review) reviewByPk.review = review
           if(stars) reviewByPk.stars = stars
 
           await reviewByPk.save()
 
           res.json(reviewByPk)
-     } catch(err){
-          if (err instanceof ValidationError) {
-               res.status(400).json({ message: 'Validation error', errors: err.errors });
-          }
-     }
+     // } catch(err){
+     //      if (err instanceof ValidationError) {
+     //           res.status(400).json({ message: 'Validation error', errors: err.errors });
+     //      }
+     // }
 })
 
 //Delete a Review
 router.delete('/:reviewId(\\d+)', restoreUser, requireAuth, async(req, res)=>{
-     const review = await Review.findByPk(req.params.reviewId, {
-          where : {
-               userId : req.user.id,
-          },
-     });
+     const review = await Review.findByPk(req.params.reviewId);
 
      if(!review){
           res.status(404).json({
                message: "Review couldn't be found"
           });
      };
+
+     if(!(review.userId === req.user.id)) return res.status(403).json({
+          message: 'Review must belong to the current user'
+     })
 
      await review.destroy();
 
