@@ -131,6 +131,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
                          {
                            model: SpotImage,
                            attributes: ['url']
+                           //url有问题 和 Spot的Get all 都有问题
                          },
                     ],
                },
