@@ -161,7 +161,7 @@ router.post('/:spotId/images', restoreUser, requireAuth, async(req, res)=>{
                attributes: ['id']
           }
      })
-     console.log(spot)
+     // console.log(spot)
      if(!spot){
           res.status(404).json({
                message: "Spot couldn't be found"
@@ -350,17 +350,25 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, validateCreateBooking
           where: {
                spotId,
                [Op.or]: [
-                    {startDate: {
-                         [Op.lte]: startDate, [Op.gt]: endDate
-                    }},
-
-                    {endDate: {
-                         [Op.gte]: startDate, [Op.lt]: endDate
-                    }},
-
                     {
-                         startDate: { [Op.lte]: startDate },
-                         endDate: { [Op.gte]: endDate }
+                         startDate: {
+                           [Op.lt]: endDate,
+                           [Op.gte]: startDate
+                         }
+                    },
+                    {
+                         endDate: {
+                           [Op.gt]: startDate,
+                           [Op.lte]: endDate
+                         }
+                    },
+                    {
+                         startDate: {
+                           [Op.lte]: startDate
+                         },
+                         endDate: {
+                           [Op.gte]: endDate
+                         }
                     }
                ]
           }
