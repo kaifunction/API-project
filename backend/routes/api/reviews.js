@@ -167,9 +167,9 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
             lng: review.Spot.lng,
             name: review.Spot.name,
             price: review.Spot.price,
-            previewImage: review.Spot.SpotImages[0].url
+            previewImage: review.Spot.SpotImages.length > 0 ? review.Spot.SpotImages[0].url : null
           },
-          "ReviewImages": review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
+          ReviewImages: review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
                id: image ? image.id : '',
                url: image && image.url !== undefined ? image.url : null,
           })) : [{ id: '', url: null }],
