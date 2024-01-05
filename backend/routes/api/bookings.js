@@ -41,7 +41,9 @@ const validateCreateBookingDate = [
 //Edit a Booking
 router.put('/:bookingId(\\d+)', restoreUser, requireAuth, validateCreateBookingDate, async(req, res)=>{
      try {
-          const { startDate, endDate } = req.body;
+          let { startDate, endDate } = req.body;
+          startDate = new Date(startDate);
+          endDate = new Date(endDate);
           const booking = await Booking.findByPk(req.params.bookingId);
           // console.log(req.user.id)
           // console.log(booking.userId)
@@ -58,7 +60,7 @@ router.put('/:bookingId(\\d+)', restoreUser, requireAuth, validateCreateBookingD
           })
 
           // console.log(new Date())
-          if(new Date(endDate) < new Date().getTime){
+          if(new Date(endDate) < new Date()){
                return res.status(403).json({
                     message: "Past bookings can't be modified"
                })
@@ -66,18 +68,37 @@ router.put('/:bookingId(\\d+)', restoreUser, requireAuth, validateCreateBookingD
 
           const existingBooking = await Booking.findOne({
                where: {
-                    [Op.or]: [
-                         {startDate: {
-                              [Op.lte]: startDate, [Op.gt]: endDate
-                         }},
-
-                         {endDate: {
-                              [Op.gte]: startDate, [Op.lt]: endDate
-                         }},
-
+                    [Op.and]: [
+                         { id: { [Op.ne]: booking.id } },
                          {
-                              startDate: { [Op.lte]: startDate },
-                              endDate: { [Op.gte]: endDate }
+                              [Op.or]: [
+                                   {
+                                    [Op.or]:[
+                                         {startDate: {[Op.eq]: startDate}},
+                                         {startDate: {[Op.eq]: endDate}},
+                                         {endDate: {[Op.eq]: startDate}},
+                                         {endDate: {[Op.eq]: endDate}}
+                                    ]
+                                   },
+                                   {
+                                     [Op.and]: [
+                                       { startDate: { [Op.lte]: startDate } },
+                                       { endDate: { [Op.gte]: startDate } }
+                                     ]
+                                   },
+                                   {
+                                     [Op.and]: [
+                                       { startDate: { [Op.lte]: endDate } },
+                                       { endDate: { [Op.gte]: endDate } }
+                                     ]
+                                   },
+                                   {
+                                     [Op.and]: [
+                                       { startDate: { [Op.gte]: startDate } },
+                                       { endDate: { [Op.lte]: endDate } }
+                                     ]
+                                   }
+                                 ]
                          }
                     ]
                }
