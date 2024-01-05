@@ -69,23 +69,23 @@ const validateCreateBookingDate = [
        .exists({ checkFalsy: true })
        .withMessage('startDate is required')
        .custom(startDate => {
-          const currentDate = new Date();
-          const inputDate = new Date(startDate);
-          if(inputDate < currentDate) {
-               throw new Error('startDate cannot be in the past')
-          }
-          return true
+         const currentDate = new Date();
+         const inputDate = new Date(startDate);
+         if (inputDate < currentDate) {
+           throw new Error('startDate cannot be in the past');
+         }
+         return true;
        }),
      check('endDate')
        .exists({ checkFalsy: true })
        .withMessage('endDate is required')
-       .custom((endDate,  { req }) => {
-          const startDate = new Date(req.body.startDate);
-          const inputDate = new Date(endDate);
-          if(inputDate <= startDate) {
-               throw new Error('endDate cannot be on or before startDate')
-          }
-          return true
+       .custom((endDate, { req }) => {
+         const startDate = new Date(req.body.startDate);
+         const inputDate = new Date(endDate);
+         if (inputDate <= startDate) {
+           throw new Error('endDate cannot be on or before startDate');
+         }
+         return true;
        }),
      handleValidationErrors
 ];
@@ -329,7 +329,9 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async(req, res)=>{
 
 //Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', restoreUser, requireAuth, validateCreateBookingDate, async(req, res)=>{
-     const { startDate, endDate } = req.body;
+     let { startDate, endDate } = req.body;
+     startDate = new Date(startDate);
+     endDate = new Date(endDate);
      const spotId = req.params.spotId;
      const spot = await Spot.findByPk(spotId);
 
@@ -346,34 +348,40 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, validateCreateBooking
           message: 'Spot must NOT belong to the current user'
      });
 
-     let existingBooking = await Booking.findOne({
+     const existingBooking = await Booking.findOne({
           where: {
                spotId,
                [Op.or]: [
                     {
-                         startDate: {
-                           [Op.lt]: endDate,
-                           [Op.gte]: startDate
-                         }
+                     [Op.or]:[
+                          {startDate: {[Op.eq]: startDate}},
+                          {startDate: {[Op.eq]: endDate}},
+                          {endDate: {[Op.eq]: startDate}},
+                          {endDate: {[Op.eq]: endDate}}
+                     ]
                     },
                     {
-                         endDate: {
-                           [Op.gt]: startDate,
-                           [Op.lte]: endDate
-                         }
+                      [Op.and]: [
+                        { startDate: { [Op.lte]: startDate } },
+                        { endDate: { [Op.gte]: startDate } }
+                      ]
                     },
                     {
-                         startDate: {
-                           [Op.lte]: startDate
-                         },
-                         endDate: {
-                           [Op.gte]: endDate
-                         }
+                      [Op.and]: [
+                        { startDate: { [Op.lte]: endDate } },
+                        { endDate: { [Op.gte]: endDate } }
+                      ]
+                    },
+                    {
+                      [Op.and]: [
+                        { startDate: { [Op.gte]: startDate } },
+                        { endDate: { [Op.lte]: endDate } }
+                      ]
                     }
-               ]
+                  ]
           }
      })
-
+     // console.log('existingBooking:', existingBooking);
      if(existingBooking){
           return res.status(403).json({
                message: 'Sorry, this spot is already booked for the specified dates',
