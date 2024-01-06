@@ -137,12 +137,12 @@ const validatePageSize = [
 
      check('minPrice')
        .optional()
-       .isInt({ min: 0 })
+       .isFloat({ min: 0 })
        .withMessage('Minimum price must be greater than or equal to 0'),
 
      check('maxPrice')
        .optional()
-       .isInt({ min: 0 })
+       .isFloat({ min: 0 })
        .withMessage('Maximum price must be greater than or equal to 0'),
 
      handleValidationErrors
@@ -548,7 +548,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=> {
           if (spot.dataValues.SpotImages[0] && spot.dataValues.SpotImages[0].url) {
              spot.dataValues.previewImage = spot.dataValues.SpotImages[0].url;
           } else {
-             spot.dataValues.previewImage = '';
+             spot.dataValues.previewImage = 'No Preview Image';
           };
 
           delete spot.dataValues.SpotImages;
@@ -575,18 +575,42 @@ router.get('/', validatePageSize, async(req, res)=>{
           whereCondition.lat = {
                [Op.between]: [minLat, maxLat]
           }
+     } else if (minLat) {
+          whereCondition.lat = {
+              [Op.gte]: minLat
+          };
+     } else if (maxLat) {
+          whereCondition.lat = {
+              [Op.lte]: maxLat
+          };
      }
 
      if(minLng && maxLng) {
           whereCondition.lng = {
                [Op.between]: [minLng, maxLng]
           }
+     } else if (minLng) {
+          whereCondition.lng = {
+              [Op.gte]: minLng
+          };
+     } else if (maxLng) {
+          whereCondition.lng = {
+              [Op.lte]: maxLng
+          };
      }
 
      if(minPrice !== undefined && maxPrice !== undefined) {
           whereCondition.price = {
                [Op.between]: [minPrice, maxPrice]
           }
+     } else if (minPrice) {
+          whereCondition.price = {
+              [Op.gte]: minPrice
+          };
+     } else if (maxPrice) {
+          whereCondition.price = {
+              [Op.lte]: maxPrice
+          };
      }
 
      let spots = await Spot.findAll({
@@ -624,7 +648,7 @@ router.get('/', validatePageSize, async(req, res)=>{
           if (spot.dataValues.SpotImages[0] && spot.dataValues.SpotImages[0].url) {
              spot.dataValues.previewImage = spot.dataValues.SpotImages[0].url;
           } else {
-            spot.dataValues.previewImage = '';
+            spot.dataValues.previewImage = 'No Preview Image';
           };
           delete spot.dataValues.SpotImages;
      })
