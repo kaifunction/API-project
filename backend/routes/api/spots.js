@@ -203,6 +203,10 @@ router.get('/:spotId/reviews', async(req, res)=>{
                 {
                   model: ReviewImage,
                   attributes: ['id', 'url']
+                },
+                {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
                 }
               ]
             },
@@ -218,8 +222,8 @@ router.get('/:spotId/reviews', async(req, res)=>{
             message: "Spot couldn't be found"
         });
      }
-
      const formattedReviews = spot.Reviews.map(review => {
+          console.log(spot.Reviews)
           return {
             id: review.id,
             userId: review.userId,
@@ -229,9 +233,9 @@ router.get('/:spotId/reviews', async(req, res)=>{
             createdAt: review.createdAt,
             updatedAt: review.updatedAt,
             User: {
-              id: spot.User.id,
-              firstName: spot.User.firstName,
-              lastName: spot.User.lastName,
+              id: review.userId,
+              firstName: review.User.firstName,
+              lastName: review.User.lastName,
             },
             ReviewImages: review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
                id: image ? image.id : 'No Review Image',
