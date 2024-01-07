@@ -170,9 +170,9 @@ router.get('/current', restoreUser, requireAuth, async(req, res)=>{
             previewImage: review.Spot.SpotImages.length > 0 ? review.Spot.SpotImages[0].url : null
           },
           ReviewImages: review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
-               id: image ? image.id : '',
+               id: image ? image.id : 'No Review Image',
                url: image && image.url !== undefined ? image.url : null,
-          })) : [{ id: '', url: null }],
+          })) : [{ id: 'No Review Image', url: null }],
         }));
 
      res.json({
