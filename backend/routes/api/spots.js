@@ -45,9 +45,15 @@ const validateCreateSpot = [
        .isLength({ min: 1, max: 500 })
        .withMessage('Description is required'),
      check('price')
-       .isInt({ min: 0 }).withMessage('Price per day must be a positive number')
-       .isNumeric()
+       .isFloat({ min: 0 })
        .withMessage('Price per day must be a positive number'),
+     //   .isNumeric()
+     //   .withMessage('Price per day must be a positive number'),
+     //   .custom((value) => {
+     //      const floatValue = parseFloat(value);
+     //      return floatValue >= 0
+     //   })
+     //   .withMessage('Price per day must be a positive number'),
      handleValidationErrors
    ];
 
@@ -228,9 +234,9 @@ router.get('/:spotId/reviews', async(req, res)=>{
               lastName: spot.User.lastName,
             },
             ReviewImages: review.ReviewImages.length > 0 ? review.ReviewImages.map(image => ({
-               id: image ? image.id : '',
+               id: image ? image.id : 'No Review Image',
                url: image && image.url !== undefined ? image.url : null,
-          })) : [{ id: '', url: null }],
+          })) : [{ id: 'No Review Image', url: null }],
           };
      });
 
