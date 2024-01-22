@@ -9,7 +9,7 @@ function Navigation({ isLoaded }) {
   return (
     <div className='logoProfileButtonContainer'>
       {/* <li> */}
-      <NavLink to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg' alt='Home' style={{width: "90px"}}/></NavLink>
+      <NavLink to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg' alt='Home' style={{width: "110px"}}/></NavLink>
       {/* </li> */}
       {isLoaded && (<ProfileButton user={sessionUser} />)}
     </div>

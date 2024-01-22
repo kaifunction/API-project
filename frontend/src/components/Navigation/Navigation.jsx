@@ -16,20 +16,20 @@ function Navigation({ isLoaded }) {
       </li>
     ) : (
       <div className='openModalButtonContainer'>
-        <li>
+        {/* <li> */}
           <OpenModalButton
             buttonText="Log In"
             modalComponent={<LoginFormModal />}
           />
           {/* <NavLink to="/login">Log In</NavLink> */}
-        </li>
-        <li>
+        {/* </li> */}
+        {/* <li> */}
           <OpenModalButton
             buttonText="Sign Up"
             modalComponent={<SignupFormModal />}
           />
           {/* <NavLink to="/signup">Sign Up</NavLink> */}
-        </li>
+        {/* </li> */}
       </div>
     );
 
