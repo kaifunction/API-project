@@ -13,15 +13,19 @@
   padding: 10px;
 }
 
+.dropdownLogout {
+  margin-left: -120px;
+  padding-left: initial
+}
 .buttonLoginSignupContainer{
-  padding: 10px;
+  padding: 10px
 }
 
 
 .loginSignupContainer {
   padding: 8px 30px 8px;
   width: fit-content;
-  margin-left: -124px;
+  margin-left: -150px;
   font-family: 'FontAwesome';
   font-size: 12px;
   font-style: oblique;
@@ -29,7 +33,9 @@
   border: 1px solid orangered;
   border-radius: 10px;
   line-height: 1.5;
+  /* padding: 1px; */
 }
+
 
 /* .openModalButtonContainer {
 
