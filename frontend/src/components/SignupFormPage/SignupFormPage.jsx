@@ -41,7 +41,7 @@ function SignupFormPage() {
   };
 
   return (
-    <>
+    <div className='signupContainer'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -106,7 +106,7 @@ function SignupFormPage() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
