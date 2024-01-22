@@ -10,10 +10,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
+}
+
+.buttonLoginSignupContainer{
+  padding: 10px;
 }
 
 
-.openModalMenuItem{
-
+.loginSignupContainer .openModalButtonContainer{
+  padding: 8px 30px 8px;
+  width: fit-content;
+  margin-left: -84px;
+  font-family: Arial;
+  font-size: 15px;
+  font-style: oblique;
+  cursor: pointer;
+  border: 1px solid orangered;
+  border-radius: 10px;
+  line-height: 1.5;
 }
