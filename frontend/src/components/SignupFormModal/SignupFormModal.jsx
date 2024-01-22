@@ -19,18 +19,19 @@ function SignupFormModal() {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
+      dispatch(
         sessionActions.signup({
-          email,
           username,
           firstName,
           lastName,
+          email,
           password
         })
       )
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
+          console.log("data====>", data)
           if (data?.errors) {
             setErrors(data.errors);
           }
@@ -105,7 +106,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={!email.length || username.length < 4 || !lastName.length || !firstName.length || password.length < 6 || confirmPassword.length < 6}>Sign Up</button>
       </form>
     </>
   );

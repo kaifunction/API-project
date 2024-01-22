@@ -32,6 +32,21 @@ const router = createBrowserRouter([
         path: '/',
         element: <h1 style={{width: 'fit-content'}}>Welcome!</h1>
       },
+      {
+        path: '/spots/:spotId'
+      },
+      {
+        path: 'spots/new'
+      },
+      {
+        path: 'spots/current'
+      },
+      {
+        path: 'spots/:spotId/edit'
+      },
+      {
+        path: 'reviews/current'
+      },
       // {
       //   path: 'login',
       //   element: <LoginFormPage />
