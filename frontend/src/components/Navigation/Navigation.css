@@ -18,7 +18,7 @@
 }
 
 
-.loginSignupContainer .openModalButtonContainer{
+.loginSignupContainer {
   padding: 8px 30px 8px;
   width: fit-content;
   margin-left: -84px;
@@ -29,4 +29,8 @@
   border: 1px solid orangered;
   border-radius: 10px;
   line-height: 1.5;
+}
+
+.openModalButtonContainer {
+
 }
