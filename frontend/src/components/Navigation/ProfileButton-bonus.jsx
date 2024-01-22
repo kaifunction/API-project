@@ -40,7 +40,7 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
+    <div className='openModalMenuItem'>
       <button onClick={toggleMenu}>
         <i className="fas fa-user-circle" />
       </button>
@@ -69,7 +69,7 @@ function ProfileButton({ user }) {
           </>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 

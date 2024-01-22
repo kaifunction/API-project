@@ -15,7 +15,7 @@ function Navigation({ isLoaded }) {
         <ProfileButton user={sessionUser} />
       </li>
     ) : (
-      <>
+      <div className='openModalButtonContainer'>
         <li>
           <OpenModalButton
             buttonText="Log In"
@@ -30,7 +30,7 @@ function Navigation({ isLoaded }) {
           />
           {/* <NavLink to="/signup">Sign Up</NavLink> */}
         </li>
-      </>
+      </div>
     );
 
   return (
