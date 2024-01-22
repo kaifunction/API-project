@@ -35,9 +35,9 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul>
-      <li>
+      {/* <li> */}
         <NavLink to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg' alt='Home'/></NavLink>
-      </li>
+      {/* </li> */}
       {isLoaded && sessionLinks}
     </ul>
   );
