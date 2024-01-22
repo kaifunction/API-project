@@ -25,10 +25,10 @@ function LoginFormPage() {
   };
 
   return (
-    <>
+    <div className='logInContainer'>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form onSubmit={handleSubmit} className='logInForm'>
+        <label className='usernameOrEmail'>
           Username or Email
           <input
             type="text"
@@ -37,7 +37,7 @@ function LoginFormPage() {
             required
           />
         </label>
-        <label>
+        <label className='passWord'>
           Password
           <input
             type="password"
@@ -49,7 +49,7 @@ function LoginFormPage() {
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 
