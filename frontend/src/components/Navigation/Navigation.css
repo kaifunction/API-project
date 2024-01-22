@@ -21,9 +21,9 @@
 .loginSignupContainer {
   padding: 8px 30px 8px;
   width: fit-content;
-  margin-left: -84px;
-  font-family: Arial;
-  font-size: 15px;
+  margin-left: -124px;
+  font-family: 'FontAwesome';
+  font-size: 12px;
   font-style: oblique;
   cursor: pointer;
   border: 1px solid orangered;
@@ -31,6 +31,6 @@
   line-height: 1.5;
 }
 
-.openModalButtonContainer {
+/* .openModalButtonContainer {
 
-}
+} */
