@@ -8,7 +8,7 @@ function SpotList(){
 
      const dispatch = useDispatch();
      const spots = useSelector(state => state.spots);
-     if(!spots)return null
+     // if(!spots)return null
 
      const spotsArray = spots.spot.Spots
      // console.log('spotsArray===>',spotsArray[0])
@@ -16,6 +16,7 @@ function SpotList(){
      useEffect(()=>{
           dispatch(fetchGetSpots())
      },[dispatch])
+
 
      return(
      <>
