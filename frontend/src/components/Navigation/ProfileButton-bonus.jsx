@@ -46,7 +46,7 @@ function ProfileButton({ user }) {
   return (
     <div className='buttonLoginSignupContainer'>
       <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
+        <i className="fas fa-user-circle" style={{cursor: "pointer"}}/>
       </button>
       <ul className={`${ulClassName} dropdownLogout`} ref={ulRef}>
         {user ? (

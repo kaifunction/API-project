@@ -7,6 +7,7 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { ModalProvider, Modal } from './context/Modal';
+import {getSpots} from './store/spot'
 
 const store = configureStore();
 
@@ -16,6 +17,7 @@ if (import.meta.env.MODE !== "production") {
   window.csrfFetch = csrfFetch;
   window.store = store;
   window.sessionActions = sessionActions;
+  window.getSpots = getSpots;
 }
 
 // const Carrot = () => (
