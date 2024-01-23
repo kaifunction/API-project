@@ -4,6 +4,7 @@ import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 import SpotList from './components/SpotList/SpotList';
+import SpotDetail from './components/SpotDetail/SpotDetail';
 import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
 
@@ -34,7 +35,8 @@ const router = createBrowserRouter([
         element: <SpotList />
       },
       {
-        path: '/spots/:spotId'
+        path: '/spots/:spotId',
+        element: <SpotDetail />
       },
       {
         path: 'spots/new'

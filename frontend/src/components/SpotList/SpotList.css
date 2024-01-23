@@ -52,3 +52,10 @@
      opacity: 1;
      display: block;
 }
+
+
+.city-rating-line{
+     display: flex;
+     width: auto;
+     gap: 90px;
+}
