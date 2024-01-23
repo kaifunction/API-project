@@ -27,11 +27,17 @@ module.exports = {
         stars: 5
       },
       {
-        spotId: 2,
-        userId: 1,
-        review: 'This was an nice spot!',
+        spotId: 1,
+        userId: 3,
+        review: 'This was an OK spot!',
         stars: 4
       },
+      // {
+      //   spotId: 2,
+      //   userId: 1,
+      //   review: 'This was an nice spot!',
+      //   stars: 4
+      // },
       {
         spotId: 3,
         userId: 4,
