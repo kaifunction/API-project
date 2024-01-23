@@ -1,0 +1,75 @@
+.spot-detail-container {
+     display: flex;
+     justify-content: space-between;
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 20px;
+     flex-wrap: wrap;
+     align-content: center;
+     flex-direction: row;
+     align-items: flex-end;
+   }
+
+   .top-column {
+     flex: 2;
+   }
+
+   .bottom-column {
+     padding-top: 550px;
+     flex: 1.5;
+     padding-left: 20px;
+   }
+
+   .image-container {
+     display: flex;
+     margin-bottom: 20px;
+   }
+
+   .preview-image-container {
+     flex: 2;
+   }
+
+   .previewImage {
+     width: 100%;
+     height: auto;
+   }
+
+   .smallImage {
+     display: flex;
+     gap: 10px;
+   }
+
+   .smallImage img {
+     width: 100px;
+     height: auto;
+   }
+
+   .callout-box {
+     background-color: #fffbc6;
+     padding: 20px;
+     border-radius: 5px;
+     text-align: center;
+   }
+
+   .callout-box p {
+     margin: 0;
+     font-size: 18px;
+   }
+
+   .callout-box button {
+     background-color: #ff4b4b;
+     color: #fff;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 16px;
+   }
+
+   .callout-box button:hover {
+     background-color: #0056b3;
+   }
+
+   .review-part{
+     align-items: flex-end;
+   }
