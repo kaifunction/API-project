@@ -1,0 +1,12 @@
+.page-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: left;
+     padding: 20px;
+   }
+
+   .form-container {
+     width: 100%;
+     max-width: 600px; /* 设置一个最大宽度，以防止表单在大屏幕上过宽 */
+   }

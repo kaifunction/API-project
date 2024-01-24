@@ -31,13 +31,14 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          // console.log("data====>", data)
+          // console.log("Signupdata====>", data)
+          //要有相同的密码才行
           if (data?.errors) {
             setErrors(data.errors);
           }
         });
     }
-    return setErrors({
+    setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
   };

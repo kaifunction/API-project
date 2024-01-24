@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpotDetail, fetchReview } from "../../store/spot";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import PostReviewModal from "../PostReviewModal/PostReviewModal";
 import "./SpotDetail.css";
 // import { useNavigate } from "react-router-dom";
 
@@ -9,10 +11,10 @@ function SpotDetail() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spotDetail = useSelector((state) => state.spots.spot);
+  //   console.log("spotDetail====>",spotDetail)
   const currentUser = useSelector((state) => state.session.user);
   const spotReview = useSelector((state) => state.spots.review);
-//     console.log(currentUser); //没有登录为null
-  //   console.log("spotReview===>", spotReview);
+  //  console.log(currentUser); //没有登录为null
 
   useEffect(() => {
     dispatch(fetchSpotDetail(spotId));
@@ -22,37 +24,42 @@ function SpotDetail() {
     dispatch(fetchReview(spotId));
   }, [dispatch, spotId]);
 
+  if (!spotReview) return null;
+
   const spotDetailImage = spotDetail.SpotImages;
+//   console.log("spotDetailImage====>", spotDetailImage);
   if (!spotDetail.SpotImages) return null;
 
   const spotReviewArr = spotReview.Reviews;
-  //   console.log(spotReviewArr)
+  if (!spotReviewArr) return null;
+
   spotReviewArr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-//   const spotPostTime = spotPostTimeArr[0];
-//   const date = new Date(spotPostTime);
   const options = { year: "numeric", month: "long" };
-//   const postedDate = date.toLocaleDateString("en-US", options);
-  //   console.log(postedDate); //January 2024时间
 
-
-
-  if (!spotReview) return null;
-  //   const spotReviews = spotReview;
-
-  // console.log("spotDetailImage===>", spotDetailImage)
   const previewImage = spotDetailImage.map((image) =>
     image.preview ? image.url : ""
   )[0];
-  // console.log(previewImage)
 
   const samllImage = spotDetailImage
     .map((image) => (image.preview ? "" : image.url))
     .slice(1);
-  // console.log("samllImage====>", samllImage)
+
   const handleReserveClick = () => {
     alert("Feature coming soon");
   };
+
+  //Post your Reviwe Button的逻辑
+  const isCurrentUserOwner =
+    currentUser && spotDetail.Owner.id === currentUser.id;
+  const hasCurrentUserPostedReview =
+    currentUser &&
+    spotReviewArr.some((review) => review.User.id === currentUser.id);
+
+  const showPostReviewButton =
+    currentUser && // 用户已登录
+    !isCurrentUserOwner && // 用户不是地点的所有者
+    !hasCurrentUserPostedReview; // 用户尚未为该地点发布评论
 
   return (
     <div className="spot-detail-container">
@@ -102,7 +109,11 @@ function SpotDetail() {
               <span>{spotDetail.numReviews === 0 ? "" : "•"}</span>
               <span className="number-review">
                 <br />
-                {spotDetail.numReviews === 0 ? "" : `${spotDetail.numReviews} ${spotDetail.numReviews === 1 ? "Review" : "Reviews"}`}
+                {spotDetail.numReviews === 0
+                  ? ""
+                  : `${spotDetail.numReviews} ${
+                      spotDetail.numReviews === 1 ? "Review" : "Reviews"
+                    }`}
               </span>
 
               <span className="price-per-night">${spotDetail.price} night</span>
@@ -126,8 +137,24 @@ function SpotDetail() {
           </span>
           <span>{spotDetail.numReviews === 0 ? "" : "•"}</span>
           <span>
-          {spotDetail.numReviews === 0 ? "" : `${spotDetail.numReviews} ${spotDetail.numReviews === 1 ? "Review" : "Reviews"}`}
+            {spotDetail.numReviews === 0
+              ? ""
+              : `${spotDetail.numReviews} ${
+                  spotDetail.numReviews === 1 ? "Review" : "Reviews"
+                }`}
           </span>
+          <div className="post-review-button">
+            {showPostReviewButton && (
+              //     <button className="post-review-button">Post Your Review</button>
+              <button>
+                <OpenModalMenuItem
+                  itemText="Post Your Review"
+                    //   onItemClick={closeMenu}
+                  modalComponent={<PostReviewModal />}
+                />
+              </button>
+            )}
+          </div>
         </div>
 
         {spotDetail.numReviews > 0 ? (
@@ -135,7 +162,11 @@ function SpotDetail() {
             {spotReviewArr.map((review, index) => (
               <div key={index} className="text-container">
                 <span className="reviewer-firstname">
-                  {review.User.firstName} {new Date(review.createdAt).toLocaleDateString("en-US", options)}
+                  {review.User.firstName}{" "}
+                  {new Date(review.createdAt).toLocaleDateString(
+                    "en-US",
+                    options
+                  )}
                 </span>
                 <p>{review.review}</p>
               </div>
@@ -143,12 +174,15 @@ function SpotDetail() {
           </div>
         ) : (
           <div className="no-reviews">
-            {currentUser && spotReviewArr.length === 0 && spotDetail.Owner.id !== currentUser.id  &&  <p>Be the first to post a review!</p>}
+            {currentUser &&
+              spotReviewArr.length === 0 &&
+              spotDetail.Owner.id !== currentUser.id && (
+                <p>Be the first to post a review!</p>
+              )}
           </div>
         )}
 
-
-{/* console.log("spotDetail ID ====>", spotDetail.Owner.id)
+        {/* console.log("spotDetail ID ====>", spotDetail.Owner.id)
   console.log("USERID ====>", spotReviewArr[0].User.id) */}
         {/* <div>
         {spotDetail.numReviews > 0 ? (

@@ -37,6 +37,7 @@ function LoginFormModal() {
     .then(closeModal)
     .catch(async (res) => {
       const data = await res.json();
+      // console.log("data====>", data)
       if (data && data.message) {
         // setErrors(data.message){
           if(data.message === "Invalid credentials"){
@@ -69,7 +70,7 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit" disabled={password.length < 6 || closeModal < 4}>Log In</button>
+        <button type="submit" disabled={password.length < 6 || credential.length < 4}>Log In</button>
       </form>
       <button onClick={handleDemoLogin}>Log in as Demo User</button>
 
