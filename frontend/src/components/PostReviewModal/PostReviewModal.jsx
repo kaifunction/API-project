@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPostReview, fetchReview } from "../../store/spot";
+import { fetchPostReview } from "../../store/newreview";
+import { fetchReview } from "../../store/review"
 import "./PostReviewModal.css";
 
 // import { useParams } from "react-router-dom";
@@ -44,8 +45,8 @@ function PostReviewModal() {
   };
   //   console.log("stars====>", stars)
 
-  const handleSubmit = () => {
-//     e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setErrors({});
     dispatch(
       fetchPostReview({

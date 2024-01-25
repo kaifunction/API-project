@@ -5,6 +5,8 @@ import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import SignupFormPage from './components/SignupFormPage';
 import SpotList from './components/SpotList/SpotList';
 import SpotDetail from './components/SpotDetail/SpotDetail';
+import SpotByUser from './components/SpotByUser/SpotByUser';
+import SpotEdit from './components/SpotEdit'
 import Navigation from './components/Navigation/Navigation-bonus';
 import CreateSpot from './components/CreateSpot'
 import * as sessionActions from './store/session';
@@ -44,10 +46,12 @@ const router = createBrowserRouter([
         element: <CreateSpot />
       },
       {
-        path: 'spots/current'
+        path: 'spots/current',
+        element: <SpotByUser />
       },
       {
-        path: 'spots/:spotId/edit'
+        path: 'spots/:spotId/edit',
+        element: <SpotEdit />
       },
       {
         path: 'reviews/current'
