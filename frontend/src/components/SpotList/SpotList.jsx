@@ -25,7 +25,7 @@ function SpotList(){
                {spotsArray?.map(eachSpot=>(
                     <div key={eachSpot.id} className='spot-tile'>
                          <NavLink key={eachSpot.id} to={`/spots/${eachSpot.id}`}>
-                         <img src={eachSpot.previewImage} alt={eachSpot.name}/>
+                         <img src={eachSpot.previewImage} alt={eachSpot.name} style={{width: "300px", height: "200px" }}/>
 
                          <p className="tooltiptext">{eachSpot.name}</p>
                          <div className='city-rating-line'>

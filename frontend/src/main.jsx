@@ -7,7 +7,12 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { ModalProvider, Modal } from './context/Modal';
-import {getSpots, getDetail, getReview, postSpot, postImageSpot, postReview} from './store/spot'
+import {getSpots, getDetail } from './store/spot';
+import { getReview } from './store/review';
+import { postSpot } from './store/newspot';
+import { postImageSpot } from './store/newspotimage';
+import { postReview } from './store/newreview';
+import { getSpotById } from './store/getspots';
 
 const store = configureStore();
 
@@ -23,6 +28,7 @@ if (import.meta.env.MODE !== "production") {
   window.postSpot = postSpot;
   window.postImageSpot = postImageSpot;
   window.postReview = postReview;
+  window.getSpotById = getSpotById;
 }
 
 // const Carrot = () => (

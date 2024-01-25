@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchSpotDetail, fetchReview } from "../../store/spot";
+import { fetchSpotDetail } from "../../store/spot";
+import { fetchReview } from "../../store/review"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import PostReviewModal from "../PostReviewModal/PostReviewModal";
 import "./SpotDetail.css";
@@ -11,14 +12,15 @@ function SpotDetail() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spotDetail = useSelector((state) => state.spots.spot);
-  //   console.log("spotDetail====>",spotDetail)
+    // console.log("spotDetail====>",spotDetail)
   const currentUser = useSelector((state) => state.session.user);
-  const spotReview = useSelector((state) => state.spots.review);
+  const spotReview = useSelector((state) => state.review.review);
   //  console.log(currentUser); //没有登录为null
+  // console.log("spotReview====>",spotReview)
 
   useEffect(() => {
     dispatch(fetchSpotDetail(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, spotReview]);
 
   useEffect(() => {
     dispatch(fetchReview(spotId));
@@ -81,6 +83,7 @@ function SpotDetail() {
               src={previewImage}
               alt={spotDetail.name}
               className="previewImage"
+              style={{width: "300px", height: "200px" }}
             />
           </div>
           <div className="samllImage">
@@ -89,7 +92,7 @@ function SpotDetail() {
                 key={index}
                 src={image}
                 alt={spotDetail.name}
-                style={{ width: "280px" }}
+                style={{width: "300px", height: "200px" }}
               />
             ))}
           </div>

@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 // import { useSelector } from "react-redux";
-import { fetchPostSpotImage } from "../../store/newspotimage";
-import { fetchPostSpot } from '../../store/newspot';
-import "./CreateSpot.css";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchSpotDetail} from "../../store/spot"
 
-function CreateSpot() {
+function SpotEdit() {
+  const { spotId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const spot = useSelector((state) => state.spots);
+  console.log("spot====>", spot);
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -18,23 +18,18 @@ function CreateSpot() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [url, setUrl] = useState("");
-  const [image1, setImage1] = useState("");
-  const [image2, setImage2] = useState("");
-  const [image3, setImage3] = useState("");
-  const [image4, setImage4] = useState("");
-  const [errors, setErrors] = useState({});
-  //   let newSpot = useSelector((state) => state.spots.newspot) ;
-  //   const newSpotId = newSpot.id
-  //   console.log("newSpot===>",newSpot)
+  const [errors, setErrors] = useState("");
 
-  function handleSubmit(e) {
+
+  useEffect(() => {
+     dispatch(fetchSpotDetail(spotId));
+   }, [dispatch, spotId]);
+
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
 
-    const urlEndWith = [".png", ".jpg", ".jpeg"];
-    const urlEndWith3 = url.slice(-4);
-    const urlEndWith4 = url.slice(-5);
 
     const errors = {};
     if (country.length === 0) errors.country = "Country is required";
@@ -47,85 +42,9 @@ function CreateSpot() {
       errors.description = "Description needs a minimum of 30 characters";
     if (name.length === 0) errors.name = "Name is required";
     if (price.length === 0) errors.price = "Price is required";
-    if (url.length === 0) {
-      errors.url = "Preview image is required";
-    } else if (
-      !urlEndWith.includes(urlEndWith3) &&
-      !urlEndWith.includes(urlEndWith4)
-    ) {
-      errors.url = "Preview image must end in .png, .jpg, or .jpeg";
-    }
 
-    // Check the rest of the images
-    [image1, image2, image3, image4].forEach((img, index) => {
-      if (
-        img.length > 0 &&
-        !urlEndWith.includes(img.slice(-4)) &&
-        !urlEndWith.includes(img.slice(-5))
-      ) {
-        errors[
-          `image${index + 1}`
-        ] = `Image URL must end in .png, .jpg, or .jpeg`;
-      }
-    });
 
-    if (Object.values(errors).length) {
-      setErrors(errors);
-    } else {
-      dispatch(
-        fetchPostSpot({
-          country,
-          address,
-          city,
-          state,
-          lat,
-          lng,
-          description,
-          name,
-          price,
-        })
-      )
-        .then((response) => {
-          const images = [
-            { url, preview: true},
-            { url: image1, preview: false },
-            { url: image2, preview: false },
-            { url: image3, preview: false },
-            { url: image4, preview: false },
-          ].filter((img) => img.url); // 过滤掉空的 URL
-
-          // 使用 Promise.all 对所有图片进行处理
-          Promise.all(
-            images.map((img) =>
-              dispatch(
-                fetchPostSpotImage({
-                  url: img.url,
-                  preview: img.preview,
-                  newSpotId: response.id,
-                })
-              )
-            )
-          )
-
-            .then(() => navigate(`/spots/${response.id}`))
-
-            .catch(async (res) => {
-              const data = await res.json();
-              if (data?.errors) {
-                setErrors(data.errors);
-              }
-            });
-        })
-
-        .catch(async (res) => {
-          const data = await res.json();
-          // console.log("dataCreate====>", data);
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        });
-    }
-  }
+  };
 
   return (
     <div className="page-container">
@@ -276,53 +195,8 @@ function CreateSpot() {
             {errors.price && <p style={{ color: "red" }}>{errors.price}</p>}
           </div>
 
-          <div className="spot-image">
-            <h3>Liven up your spot with photos</h3>
-            <p>Submit a link to at least one photo to publish your spot.</p>
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="Preview Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
-            />
-            {errors.url && <p style={{ color: "red" }}>{errors.url}</p>}
-            <input
-              type="text"
-              value={image1}
-              onChange={(e) => setImage1(e.target.value)}
-              placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
-            />
-            {errors.image1 && <p style={{ color: "red" }}>{errors.image1}</p>}
-            <input
-              type="text"
-              value={image2}
-              onChange={(e) => setImage2(e.target.value)}
-              placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
-            />
-            {errors.image2 && <p style={{ color: "red" }}>{errors.image2}</p>}
-            <input
-              type="text"
-              value={image3}
-              onChange={(e) => setImage3(e.target.value)}
-              placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
-            />
-            {errors.image3 && <p style={{ color: "red" }}>{errors.image3}</p>}
-            <input
-              type="text"
-              value={image4}
-              onChange={(e) => setImage4(e.target.value)}
-              placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
-            />
-          </div>
-          {errors.image4 && <p style={{ color: "red" }}>{errors.image4}</p>}
-
           <div className="submit-button">
-            <button type="submit">Create Spot</button>
+            <button type="submit">Update your Spot</button>
           </div>
         </form>
       </div>
@@ -330,4 +204,4 @@ function CreateSpot() {
   );
 }
 
-export default CreateSpot;
+export default SpotEdit;
