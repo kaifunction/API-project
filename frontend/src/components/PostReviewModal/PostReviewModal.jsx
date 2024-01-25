@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPostReview } from "../../store/spot";
+import { fetchPostReview, fetchReview } from "../../store/spot";
 import "./PostReviewModal.css";
 
 // import { useParams } from "react-router-dom";
@@ -44,8 +44,8 @@ function PostReviewModal() {
   };
   //   console.log("stars====>", stars)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+//     e.preventDefault();
     setErrors({});
     dispatch(
       fetchPostReview({
@@ -54,7 +54,10 @@ function PostReviewModal() {
         spotId,
       })
     )
-      .then(closeModal)
+      .then(()=> {
+          dispatch(fetchReview(spotId));
+          closeModal()
+      })
       .catch(async (res) => {
         const data = await res.json();
         if (data?.message) {

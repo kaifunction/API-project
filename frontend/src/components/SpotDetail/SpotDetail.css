@@ -1,12 +1,13 @@
 .spot-detail-container {
      display: flex;
+     flex-direction: column;
      justify-content: space-between;
      max-width: 1200px;
      margin: 0 auto;
      padding: 20px;
      flex-wrap: wrap;
      align-content: center;
-     flex-direction: row;
+     /* flex-direction: row; */
      align-items: flex-end;
    }
 
@@ -15,9 +16,10 @@
    }
 
    .bottom-column {
-     padding-top: 550px;
-     flex: 1.5;
-     padding-left: 20px;
+     padding: 20px;
+     display: inline-block;
+     margin: auto;
+     text-align: left;
    }
 
    .image-container {
