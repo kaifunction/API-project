@@ -103,12 +103,12 @@ export const fetchPostSpotImage = (spotInfo) => async () => {
     }),
   });
   // const data = await response.json();
-  // console.log("responseImage===>", response)
+  console.log("responseImage===>", response)
   // dispatch(postImageSpot(data))
   return response;
 };
 
-export const fetchPostReview = (spotReview) => async () => {
+export const fetchPostReview = (spotReview) => async (dispatch) => {
   const { review, stars, spotId } = spotReview;
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "POST",
@@ -119,6 +119,7 @@ export const fetchPostReview = (spotReview) => async () => {
   });
 
   console.log("responseReview===>", response);
+  dispatch(postReview(response))
   return response;
 };
 

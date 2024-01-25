@@ -37,13 +37,19 @@ function SpotDetail() {
 
   const options = { year: "numeric", month: "long" };
 
-  const previewImage = spotDetailImage.map((image) =>
-    image.preview ? image.url : ""
-  )[0];
+  const firstImage = spotDetailImage.find((image) => {
+    if (image.preview === true) return image.url;
+  });
 
-  const samllImage = spotDetailImage
-    .map((image) => (image.preview ? "" : image.url))
-    .slice(1);
+//   console.log("firstImage====>", firstImage);
+  const previewImage = firstImage.url;
+//   console.log("previewImage====>", previewImage);
+//   console.log("spotDetailImage====>", spotDetailImage);
+
+  const smallImage = spotDetailImage
+    .map((image) => (image.preview === false ? image.url : ""))
+    .filter((url) => url !== "");
+//   console.log("smallImage====>", smallImage);
 
   const handleReserveClick = () => {
     alert("Feature coming soon");
@@ -78,7 +84,7 @@ function SpotDetail() {
             />
           </div>
           <div className="samllImage">
-            {samllImage.map((image, index) => (
+            {smallImage.map((image, index) => (
               <img
                 key={index}
                 src={image}
@@ -149,7 +155,7 @@ function SpotDetail() {
               <button>
                 <OpenModalMenuItem
                   itemText="Post Your Review"
-                    //   onItemClick={closeMenu}
+                  //     onItemClick={closeMenu}
                   modalComponent={<PostReviewModal />}
                 />
               </button>
