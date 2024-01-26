@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpotDetail } from "../../store/spot";
-import { fetchReview } from "../../store/review"
+import { fetchReview } from "../../store/review";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import PostReviewModal from "../PostReviewModal/PostReviewModal";
+import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal"
 import "./SpotDetail.css";
 // import { useNavigate } from "react-router-dom";
 
@@ -12,7 +13,7 @@ function SpotDetail() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spotDetail = useSelector((state) => state.spots.spot);
-    // console.log("spotDetail====>",spotDetail)
+  // console.log("spotDetail====>",spotDetail)
   const currentUser = useSelector((state) => state.session.user);
   const spotReview = useSelector((state) => state.review.review);
   //  console.log(currentUser); //没有登录为null
@@ -29,7 +30,7 @@ function SpotDetail() {
   if (!spotReview) return null;
 
   const spotDetailImage = spotDetail.SpotImages;
-//   console.log("spotDetailImage====>", spotDetailImage);
+  //   console.log("spotDetailImage====>", spotDetailImage);
   if (!spotDetail.SpotImages) return null;
 
   const spotReviewArr = spotReview.Reviews;
@@ -43,15 +44,15 @@ function SpotDetail() {
     if (image.preview === true) return image.url;
   });
 
-//   console.log("firstImage====>", firstImage);
+  //   console.log("firstImage====>", firstImage);
   const previewImage = firstImage.url;
-//   console.log("previewImage====>", previewImage);
-//   console.log("spotDetailImage====>", spotDetailImage);
+  //   console.log("previewImage====>", previewImage);
+  //   console.log("spotDetailImage====>", spotDetailImage);
 
   const smallImage = spotDetailImage
     .map((image) => (image.preview === false ? image.url : ""))
     .filter((url) => url !== "");
-//   console.log("smallImage====>", smallImage);
+  //   console.log("smallImage====>", smallImage);
 
   const handleReserveClick = () => {
     alert("Feature coming soon");
@@ -69,6 +70,9 @@ function SpotDetail() {
     !isCurrentUserOwner && // 用户不是地点的所有者
     !hasCurrentUserPostedReview; // 用户尚未为该地点发布评论
 
+  // const showDeleteReviewButton =
+  //   currentUser && !isCurrentUserOwner && hasCurrentUserPostedReview;
+
   return (
     <div className="spot-detail-container">
       {/* 图片和spot名字，地址 */}
@@ -83,7 +87,7 @@ function SpotDetail() {
               src={previewImage}
               alt={spotDetail.name}
               className="previewImage"
-              style={{width: "300px", height: "200px" }}
+              style={{ width: "300px", height: "200px" }}
             />
           </div>
           <div className="samllImage">
@@ -92,7 +96,7 @@ function SpotDetail() {
                 key={index}
                 src={image}
                 alt={spotDetail.name}
-                style={{width: "300px", height: "200px" }}
+                style={{ width: "300px", height: "200px" }}
               />
             ))}
           </div>
@@ -178,6 +182,16 @@ function SpotDetail() {
                   )}
                 </span>
                 <p>{review.review}</p>
+                <div className="delete-review-button">
+                {/* {console.log("reviewIdfromSPOTDETAIL===>", review.id)} */}
+                  {review.User.id === currentUser.id && <button>
+                    <OpenModalMenuItem
+                    itemText="Delete"
+                    //     onItemClick={closeMenu}
+                    modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                  />
+                    </button>}
+                </div>
               </div>
             ))}
           </div>

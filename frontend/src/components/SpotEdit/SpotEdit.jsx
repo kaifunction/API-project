@@ -81,8 +81,8 @@ function SpotEdit() {
           setErrors(data.errors);
         }
       });
+      navigate(`/spots/${spotId}`);
     }
-    navigate(`/spots/${spotId}`);
   };
 
   return (
