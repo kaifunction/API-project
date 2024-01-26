@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGetSpotsById } from "../../store/getspots";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteSpotModal from "../DeleteSpotModal/DeleteSpotModal";
 // import SpotEdit from "../SpotEdit/SpotEdit"
 import "./SpotByUser.css";
 
@@ -77,8 +79,15 @@ function SpotByUser() {
                 <button onClick={(e) => handleUpdate(e, spot.id)}>Update</button>
                 {/* <SpotEdit spotId={spot.id}/> */}
               </div>
+                     {/* {console.log("spotIDfromcomponent===>", spot.id)} */}
               <div className="delete-button">
-                <button>Delete</button>
+                <button>
+                <OpenModalMenuItem
+                  itemText="Delete"
+                  //     onItemClick={closeMenu}
+                  modalComponent={<DeleteSpotModal spotId={spot.id}/>}
+                />
+                </button>
               </div>
             </div>
           </div>

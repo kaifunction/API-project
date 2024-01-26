@@ -14,6 +14,7 @@ import { postImageSpot } from './store/newspotimage';
 import { postReview } from './store/newreview';
 import { getSpotById } from './store/getspots';
 import { updateSpot } from './store/updateSpot';
+import { deleteSpot } from './store/deletespot';
 
 const store = configureStore();
 
@@ -31,6 +32,7 @@ if (import.meta.env.MODE !== "production") {
   window.postReview = postReview;
   window.getSpotById = getSpotById;
   window.updateSpot = updateSpot;
+  window.deleteSpot = deleteSpot;
 }
 
 // const Carrot = () => (

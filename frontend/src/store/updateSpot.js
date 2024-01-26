@@ -7,13 +7,13 @@ export const updateSpot = (spot) => ({
   spot,
 });
 
-export const fetchUpdateSpot = (updatespot, spotId) => async (dispatch) => {
+export const fetchUpdateSpot = (updatespot) => async (dispatch) => {
   const { country, address, city, state, lat, lng, description, name, price } = updatespot;
-  console.log("updatespot=====>",updatespot)
+//   console.log("updatespot=====>",updatespot)
     //Can get the updateInfo from thunk.
-    console.log("spotId=====>",spotId)
+//     console.log("spotId=====>",updatespot.spotId)
     //Can NOT get the spotId from thunk.
-  const response = await csrfFetch(`/api/spots/${spotId}`, {
+  const response = await csrfFetch(`/api/spots/${updatespot.spotId}`, {
     method: "PUT",
     body: JSON.stringify({
       country,
