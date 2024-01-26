@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf.js";
 
 const GET_ALLSPOTS = "spot/getSpots";
 const GET_SPOTDETAIL = "spot/getDetail";
+// const DELETE_SPOT = "delete/deleteSpot";
 //move1
 // const GET_REVIEW = "spot/getReview";
 //move2
@@ -21,6 +22,12 @@ export const getDetail = (spot) => ({
   type: GET_SPOTDETAIL,
   spot,
 });
+
+
+// export const deleteSpot = (spotId) => ({
+//   type: DELETE_SPOT,
+//   spotId
+// });
 
 //move1
 // export const getReview = (review) => ({
@@ -64,6 +71,16 @@ export const fetchSpotDetail = (spotId) => async (dispatch) => {
   dispatch(getDetail(data));
   return data;
 };
+
+// export const fetchDeleteSpot = (spotId) => async(dispatch) => {
+//   const response = await csrfFetch(`/api/spots/${spotId}`, {
+//        methed: "DELETE",
+//   });
+//   // const data = await response.json()
+//   dispatch(deleteSpot(response))
+//   return response;
+// };
+
 
 //move1
 // export const fetchReview = (spotId) => async (dispatch) => {
@@ -146,6 +163,12 @@ function getAllSpotReducer(state = initialState, action) {
     case GET_SPOTDETAIL: {
       return { ...state, spot: action.spot };
     }
+//     case DELETE_SPOT: {
+//       const newState = {...state}
+//       delete newState[action.spotId]
+//       return newState
+//       // return
+//  }
     // case GET_REVIEW: {
     //   return { ...state, review: action.review };
     // }
