@@ -7,6 +7,7 @@ import postNewSpotReducer from './newspot';
 import postSpotImageReducer from './newspotimage';
 import postReviewReducer from './newreview';
 import getAllSpotByIdReducer from './getspots';
+import updateSpotReducer from './updateSpot'
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   newspotImage: postSpotImageReducer,
   newReview: postReviewReducer,
   getspots: getAllSpotByIdReducer,
+  updataspot: updateSpotReducer,
 });
 
 let enhancer;

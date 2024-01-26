@@ -2,13 +2,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchSpotDetail} from "../../store/spot"
+import { fetchSpotDetail } from "../../store/spot";
+import { fetchUpdateSpot } from "../../store/updateSpot"
 
 function SpotEdit() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots);
-  console.log("spot====>", spot);
+//   console.log("spot====>", spot.spot.country);
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -18,20 +19,31 @@ function SpotEdit() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [errors, setErrors] = useState("");
-
+  const [errors, setErrors] = useState("")
 
   useEffect(() => {
-     dispatch(fetchSpotDetail(spotId));
-   }, [dispatch, spotId]);
+    dispatch(fetchSpotDetail(spotId));
+  }, [dispatch, spotId]);
 
+  useEffect(() => {
+    if (spot) {
+      setCountry(spot.spot.country);
+      setAddress(spot.spot.address);
+      setCity(spot.spot.city);
+      setState(spot.spot.state);
+      setLat(spot.spot.lat);
+      setLng(spot.spot.lng);
+      setDescription(spot.spot.description);
+      setName(spot.spot.name);
+      setPrice(spot.spot.price);
+    }
+  }, [spot]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
 
-
-    const errors = {};
+    const errors = {}
     if (country.length === 0) errors.country = "Country is required";
     if (address.length === 0) errors.address = "Address is required";
     if (city.length === 0) errors.city = "City is required";
@@ -43,7 +55,30 @@ function SpotEdit() {
     if (name.length === 0) errors.name = "Name is required";
     if (price.length === 0) errors.price = "Price is required";
 
+    console.log("spotIdcp=====>",spotId)
+    //Can get the spotId from component.
 
+    if(Object.values(errors).length > 0){
+     setErrors(errors)
+    } else {
+     dispatch(fetchUpdateSpot({
+          country,
+          address,
+          city,
+          state,
+          lat,
+          lng,
+          description,
+          name,
+          price,
+          spotId: spotId
+     })).catch(async (res) => {
+          const data = await res.json();
+          if(data?.errors){
+               setErrors(data.errors)
+          }
+     });
+    }
   };
 
   return (

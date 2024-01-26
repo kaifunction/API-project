@@ -13,6 +13,7 @@ import { postSpot } from './store/newspot';
 import { postImageSpot } from './store/newspotimage';
 import { postReview } from './store/newreview';
 import { getSpotById } from './store/getspots';
+import { updateSpot } from './store/updateSpot';
 
 const store = configureStore();
 
@@ -29,6 +30,7 @@ if (import.meta.env.MODE !== "production") {
   window.postImageSpot = postImageSpot;
   window.postReview = postReview;
   window.getSpotById = getSpotById;
+  window.updateSpot = updateSpot;
 }
 
 // const Carrot = () => (
