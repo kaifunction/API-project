@@ -1,23 +1,28 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { fetchDeleteSpot } from "../../store/deletespot";
+import "./DeleteSpotModal.css"
+// import { useEffect, useState } from "react";
 
 
 function DeleteSpotModal({spotId}) {
      const dispatch = useDispatch();
      const { closeModal } = useModal();
-     // const spotId = useSelector((state) => state.spots.spot.id)
-     console.log("spotId=====>",spotId)
-  const handledelete = (e) => {
-    e.preventDefault();
-    dispatch(fetchDeleteSpot(spotId))
-    closeModal()
-  };
+     // const spot = useSelector(state => state.spots.spot)
+     // console.log("spot===>",spot)
+     // const currentUserSpot = useSelector((state) => state.getspots.spot.Spots);
+     // console.log("MODALcurrentUserSpot=====>",currentUserSpot)
 
-  const handlekeep = (e) => {
-    e.preventDefault();
-    closeModal()
-  };
+     const handledelete = (e) => {
+              e.preventDefault();
+          dispatch(fetchDeleteSpot(spotId))
+          closeModal()
+     };
+
+     const handlekeep = () => {
+          //     e.preventDefault();
+          closeModal()
+     };
 
   return (
     <div className="delete-modal-container">

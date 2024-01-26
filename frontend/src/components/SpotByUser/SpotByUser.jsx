@@ -11,7 +11,7 @@ import "./SpotByUser.css";
 function SpotByUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-//   const currentUserId = useSelector((state) => state.session.user.id);
+  //   const currentUserId = useSelector((state) => state.session.user.id);
   // console.log("currentUser=====>", currentUserId)
   const currentUserSpot = useSelector((state) => state.getspots.spot.Spots);
 
@@ -30,9 +30,14 @@ function SpotByUser() {
   };
 
   const handleUpdate = (e, spotId) => {
-     e.preventDefault();
-     navigate(`/spots/${spotId}/edit`)
-  }
+    e.preventDefault();
+    navigate(`/spots/${spotId}/edit`);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    //需要解决，
+  };
 
   return (
     <div className="manage-page-container">
@@ -76,17 +81,19 @@ function SpotByUser() {
             </NavLink>
             <div className="buttons">
               <div className="update-button">
-                <button onClick={(e) => handleUpdate(e, spot.id)}>Update</button>
+                <button onClick={(e) => handleUpdate(e, spot.id)}>
+                  Update
+                </button>
                 {/* <SpotEdit spotId={spot.id}/> */}
               </div>
-                     {/* {console.log("spotIDfromcomponent===>", spot.id)} */}
+              {/* {console.log("spotIDfromcomponent===>", spot.id)} */}
               <div className="delete-button">
-                <button>
-                <OpenModalMenuItem
-                  itemText="Delete"
-                  //     onItemClick={closeMenu}
-                  modalComponent={<DeleteSpotModal spotId={spot.id}/>}
-                />
+                <button onClick={handleDelete}>
+                  <OpenModalMenuItem
+                    itemText="Delete"
+                    //     onItemClick={closeMenu}
+                    modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                  />
                 </button>
               </div>
             </div>
