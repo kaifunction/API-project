@@ -11,6 +11,7 @@ import "./SpotByUser.css";
 function SpotByUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const [render, setRender] = useState(false);
   //   const currentUserId = useSelector((state) => state.session.user.id);
   // console.log("currentUser=====>", currentUserId)
   const currentUserSpot = useSelector((state) => state.getspots.spot.Spots);
@@ -42,14 +43,15 @@ function SpotByUser() {
   return (
     <div className="manage-page-container">
       <div className="manage-header">
-        <h1 className="manage-title">Manage Your Spots</h1>
-        <button onClick={handleCreateSpot}>Create a New Spot</button>
+        <h1 className="manage-title h1">Manage Your Spots</h1>
+        <button onClick={handleCreateSpot}
+        className="create-spot-button-manage">Create a New Spot</button>
       </div>
 
       <div className="manage-images-container">
         {currentUserSpot?.map((spot) => (
           <div key={spot.id} className="each-image-container">
-            <NavLink key={spot.id} to={`/spots/${spot.id}`}>
+            <NavLink key={spot.id} to={`/spots/${spot.id}`} style={{textDecoration: "none"}}>
               <div className="image">
                 <img
                   src={spot.previewImage}
@@ -66,7 +68,7 @@ function SpotByUser() {
                   <span className="star-review">
                     <i
                       className="fa-solid fa-star"
-                      style={{ width: "20px" }}
+                      style={{ width: "25px", color: "#ffe51c" }}
                     ></i>
                     {spot.avgRating > 0 ? spot.avgRating.toFixed(1) : "New"}
                   </span>
@@ -80,22 +82,21 @@ function SpotByUser() {
               </div>
             </NavLink>
             <div className="buttons">
-              <div className="update-button">
-                <button onClick={(e) => handleUpdate(e, spot.id)}>
+
+                <button onClick={(e) => handleUpdate(e, spot.id)} className="update-button" style={{cursor: "pointer"}}>
                   Update
                 </button>
-                {/* <SpotEdit spotId={spot.id}/> */}
-              </div>
-              {/* {console.log("spotIDfromcomponent===>", spot.id)} */}
-              <div className="delete-button">
-                <button onClick={handleDelete}>
+
+              {/* <div className="delete-button"> */}
+                <button onClick={handleDelete}
+                className="delete-button" style={{cursor: "pointer"}}>
                   <OpenModalMenuItem
                     itemText="Delete"
                     //     onItemClick={closeMenu}
                     modalComponent={<DeleteSpotModal spotId={spot.id} />}
                   />
                 </button>
-              </div>
+              {/* </div> */}
             </div>
           </div>
         ))}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpotDetail } from "../../store/spot";
 import { fetchUpdateSpot } from "../../store/updateSpot";
+import "./SpotEdit.css"
 
 function SpotEdit() {
   const { spotId } = useParams();
@@ -54,7 +55,11 @@ function SpotEdit() {
     if (description.length < 30)
       errors.description = "Description needs a minimum of 30 characters";
     if (name.length === 0) errors.name = "Name is required";
-    if (price.length === 0) errors.price = "Price is required";
+    if (price.length === 0) {
+      errors.price = "Price is required";
+    } else if (!/^[1-9]\d*$/.test(price)) {
+      errors.price = "Price must be a positive integer";
+    }
 
 //     console.log("spotIdFromComponent=====>", spotId);
     //Can get the spotId from component.
@@ -88,9 +93,9 @@ function SpotEdit() {
   return (
     <div className="page-container">
       <div className="title-container">
-        <h1>Create a new Spot</h1>
-        <h3>Where&apos;s your place located?</h3>
-        <p>
+        <h1 className="h1">Create a new Spot</h1>
+        <h3 className="h3">Where&apos;s your place located?</h3>
+        <p className="p">
           Guests will only get your exact address once they booked a
           reservation.
         </p>
@@ -100,27 +105,27 @@ function SpotEdit() {
         <form onSubmit={handleSubmit}>
           <div className="first-four-input">
             {/* Country */}
-            <label>
+            <label className="country-label">
               Country
               <input
                 type="text"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="country"
-                style={{ width: "600px", margin: "5px 0" }}
+                style={{ width: "580px", margin: "5px 0" }}
               />
             </label>
             {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
 
             {/* Address */}
-            <label>
+            <label className="address-label">
               Street Address
               <input
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Address"
-                style={{ width: "600px", margin: "5px 0" }}
+                style={{ width: "580px", margin: "5px 0" }}
               />
             </label>
             {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
@@ -129,58 +134,88 @@ function SpotEdit() {
               {/* City */}
               <label>
                 City
+                <br />
+                <span style={{ paddingRight: "15px" }}></span>
                 <input
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="City"
+                  style={{
+                    width: "380px",
+                    position: "relative",
+                    left: "-14px",
+                    top: "5px",
+                  }}
                 />
+                <span style={{position: "absolute"}}>, </span>
               </label>
-              {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
-              <span>, </span>
+              {errors.city && <p style={{ color: "red", position: "relative", top: "50px", left: "-400px" }}>{errors.city}</p>}
 
               {/* State */}
-              <label>
+              <label className="state-label">
                 State
+                <br />
+                <span style={{ paddingRight: "15px" }}></span>
                 <input
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   placeholder="State"
+                  style={{
+                    width: "169px",
+                    position: "relative",
+                    left: "-14px",
+                    top: "5px",
+                  }}
                 />
               </label>
-              {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
+              {errors.state && <p style={{ color: "red", position: "relative", top: "50px", left: "-190px"}}>{errors.state}</p>}
             </div>
 
             <div className="lat-lng">
               {/* Latitude */}
-              <label>
+              <div className="lat-lng">
+              <label className="latitude-label">
                 Latitude
                 <input
                   type="text"
                   value={lat}
                   onChange={(e) => setLat(e.target.value)}
                   placeholder="Latitude"
+                  style={{
+                    width: "380px",
+                    position: "relative",
+                    left: "0px",
+                    top: "5px",
+                  }}
                 />
+                <span>, </span>
               </label>
-              {errors.lat && <p style={{ color: "red" }}>{errors.lat}</p>}
-              <span>, </span>
+              {errors.lat && <p style={{ color: "red", position: "relative", top: "50px", left: "-387px"}}>{errors.lat}</p>}
               {/* Longitude */}
-              <label>
+              <label className="longitude-label">
                 Longitude
                 <input
                   type="text"
                   value={lng}
                   onChange={(e) => setLng(e.target.value)}
                   placeholder="Longitude"
+                  style={{
+                    width: "159px",
+                    position: "relative",
+                    left: "21px",
+                    top: "5px",
+                  }}
                 />
               </label>
-              {errors.lng && <p style={{ color: "red" }}>{errors.lng}</p>}
+              {errors.lng && <p style={{ color: "red", position: "relative", top: "50px", left: "-145px" }}>{errors.lng}</p>}
+              </div>
             </div>
           </div>
 
           <div className="describe-container">
-            <h3>Describe your place to guests</h3>
+            <h3 className="h3">Describe your place to guests</h3>
             <p>
               Mention the best features of your space, any special amentities
               like fast wifi or parking, and what you love about the
@@ -190,7 +225,7 @@ function SpotEdit() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Please write at least 30 characters"
-              style={{ width: "600px", height: "100px" }}
+              style={{ width: "580px", height: "100px" }}
             ></textarea>
             {errors.description && (
               <p style={{ color: "red" }}>{errors.description}</p>
@@ -198,7 +233,7 @@ function SpotEdit() {
           </div>
 
           <div className="spot-name">
-            <h3>Create a title for your spot</h3>
+            <h3 className="h3">Create a title for your spot</h3>
             <p>
               Catch guests&apos; attention with a spot title that highlights
               what makes your place special.
@@ -209,14 +244,14 @@ function SpotEdit() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name of your spot"
-                style={{ width: "600px", margin: "5px 0" }}
+                style={{ width: "580px", margin: "5px 0" }}
               />
             </label>
             {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
           </div>
 
           <div className="base-price">
-            <h3>Set a base price for your spot</h3>
+            <h3 className="h3">Set a base price for your spot</h3>
             <p>
               Competitive pricing can help your listing stand out and rank
               higher in search results.
@@ -228,14 +263,15 @@ function SpotEdit() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price per night (USD)"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "575px", margin: "5px 0" }}
               />
             </label>
             {errors.price && <p style={{ color: "red" }}>{errors.price}</p>}
           </div>
 
-          <div className="submit-button">
-            <button type="submit">Update your Spot</button>
+          <div className="submit-button" >
+            <button type="submit" style={{position: "relative",
+              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"3px"}}>Update your Spot</button>
           </div>
         </form>
       </div>

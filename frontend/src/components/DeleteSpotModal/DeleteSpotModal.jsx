@@ -16,6 +16,10 @@ function DeleteSpotModal({spotId}) {
      const handledelete = (e) => {
               e.preventDefault();
           dispatch(fetchDeleteSpot(spotId))
+          .then(() => {
+            // 在成功删除后，使用 window.location.href 导航到 "/spots/current"
+            window.location.href = "/spots/current";
+          })
           closeModal()
      };
 

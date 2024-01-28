@@ -1,0 +1,36 @@
+#modal-content{
+     background-color: #11212d;
+     border-radius: 20px;
+}
+
+.signupH1{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 20px;
+}
+
+.signup-container{
+     display: flex;
+     flex-direction: column;
+     color: #00ffbf;
+}
+
+
+.signup-form{
+     display: flex;
+     flex-direction: column;
+     padding: 10px 20px;
+     gap: 10px;
+     font-size: 12px;
+}
+
+
+.signup-button{
+     background-color: #00ffbf;
+     border: 2px solid #ccd0cf;
+     border-radius: 5px;
+     padding: 3px;
+     margin: 5px 0;
+     width: 70px;
+}

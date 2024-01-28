@@ -5,7 +5,7 @@ import { fetchSpotDetail } from "../../store/spot";
 import { fetchReview } from "../../store/review";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import PostReviewModal from "../PostReviewModal/PostReviewModal";
-import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal"
+import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import "./SpotDetail.css";
 // import { useNavigate } from "react-router-dom";
 
@@ -77,8 +77,8 @@ function SpotDetail() {
     <div className="spot-detail-container">
       {/* 图片和spot名字，地址 */}
       <div className="top-column">
-        <h1>{spotDetail.name}</h1>
-        <h3>
+        <h1 className="detail-title h1">{spotDetail.name}</h1>
+        <h3 className="detail-city-state-country h3">
           {spotDetail.city}, {spotDetail.state}, {spotDetail.country}
         </h3>
         <div className="image-container">
@@ -87,7 +87,7 @@ function SpotDetail() {
               src={previewImage}
               alt={spotDetail.name}
               className="previewImage"
-              style={{ width: "300px", height: "200px" }}
+              style={{ width: "600px", height: "420px" }}
             />
           </div>
           <div className="samllImage">
@@ -96,7 +96,12 @@ function SpotDetail() {
                 key={index}
                 src={image}
                 alt={spotDetail.name}
-                style={{ width: "300px", height: "200px" }}
+                style={{
+                  width: "280px",
+                  height: "203px",
+                  paddingLeft: "10px",
+                  paddingBottom: "10px",
+                }}
               />
             ))}
           </div>
@@ -113,15 +118,21 @@ function SpotDetail() {
 
           <div className="callout-box">
             <div className="star-review-price-container">
-              <span className="star-rating-number">
-                <i className="fa-solid fa-star" style={{ width: "30px" }}></i>
-                {spotDetail.avgStarRating > 0
-                  ? spotDetail.avgStarRating.toFixed(1)
-                  : "New"}
+              <span className="price-per-night" style={{ color: "#00ffbf" }}>
+                ${spotDetail.price} night
               </span>
-              <span>{spotDetail.numReviews === 0 ? "" : "•"}</span>
-              <span className="number-review">
+
+              <span
+                className="number-review"
+                style={{
+                  position: "relative",
+                  top: "-17px",
+                  left: "335px",
+                  color: "#00ffbf",
+                }}
+              >
                 <br />
+                <span>{spotDetail.numReviews === 0 ? "" : "•"}</span>
                 {spotDetail.numReviews === 0
                   ? ""
                   : `${spotDetail.numReviews} ${
@@ -129,7 +140,22 @@ function SpotDetail() {
                     }`}
               </span>
 
-              <span className="price-per-night">${spotDetail.price} night</span>
+              <span
+                className="star-rating-number"
+                style={{
+                  color: "#00ffbf",
+                  position: "relative",
+                  left: "-80px",
+                }}
+              >
+                <i
+                  className="fa-solid fa-star"
+                  style={{ width: "30px", color: "#ffe51c" }}
+                ></i>
+                {spotDetail.avgStarRating > 0
+                  ? spotDetail.avgStarRating.toFixed(1)
+                  : "New"}
+              </span>
             </div>
 
             <button onClick={handleReserveClick} className="reserve-button">
@@ -140,16 +166,27 @@ function SpotDetail() {
       </div>
 
       {/* 底下的reviews包括🌟 rating， review数量 */}
+      <span
+        style={{
+          width: "100%",
+          height: "2px",
+          backgroundColor: "#00ffbf",
+          margin: "40px 0",
+        }}
+      ></span>
       <div className="bottom-column">
         <div className="review-part">
           <span>
-            <i className="fa-solid fa-star" style={{ width: "30px" }}></i>
+            <i
+              className="fa-solid fa-star"
+              style={{ width: "30px", color: "#ffe51c" }}
+            ></i>
             {spotDetail.avgStarRating > 0
               ? spotDetail.avgStarRating.toFixed(1)
               : "New"}
           </span>
-          <span>{spotDetail.numReviews === 0 ? "" : "•"}</span>
-          <span>
+          <span style={{position: "relative", left:"15px"}}>{spotDetail.numReviews === 0 ? "" : "•"}</span>
+          <span style={{position: "relative", left:"20px"}}>
             {spotDetail.numReviews === 0
               ? ""
               : `${spotDetail.numReviews} ${
@@ -159,7 +196,7 @@ function SpotDetail() {
           <div className="post-review-button">
             {showPostReviewButton && (
               //     <button className="post-review-button">Post Your Review</button>
-              <button>
+              <button className="detail-post-review" style={{position: "relative", top:"10px"}}>
                 <OpenModalMenuItem
                   itemText="Post Your Review"
                   //     onItemClick={closeMenu}
@@ -171,7 +208,10 @@ function SpotDetail() {
         </div>
 
         {spotDetail.numReviews > 0 ? (
-          <div className="review-container">
+          <div
+            className="review-container"
+            style={{ position: "relative", left: "-1015px", top: "80px", display: "flex", flexDirection: "column", gap: "20px"}}
+          >
             {spotReviewArr.map((review, index) => (
               <div key={index} className="text-container">
                 <span className="reviewer-firstname">
@@ -183,20 +223,24 @@ function SpotDetail() {
                 </span>
                 <p>{review.review}</p>
                 <div className="delete-review-button">
-                {/* {console.log("reviewIdfromSPOTDETAIL===>", review.id)} */}
-                  {review.User.id === currentUser.id && <button>
-                    <OpenModalMenuItem
-                    itemText="Delete"
-                    //     onItemClick={closeMenu}
-                    modalComponent={<DeleteReviewModal reviewId={review.id} />}
-                  />
-                    </button>}
+                  {/* {console.log("reviewIdfromSPOTDETAIL===>", review.id)} */}
+                  {review?.User.id === currentUser?.id && (
+                    <button className="detail-delete-button">
+                      <OpenModalMenuItem
+                        itemText="Delete"
+                        //     onItemClick={closeMenu}
+                        modalComponent={
+                          <DeleteReviewModal reviewId={review.id} />
+                        }
+                      />
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="no-reviews">
+          <div className="no-reviews" style={{position:"relative", right: "990px", top: "56px"}}>
             {currentUser &&
               spotReviewArr.length === 0 &&
               spotDetail.Owner.id !== currentUser.id && (
@@ -204,29 +248,6 @@ function SpotDetail() {
               )}
           </div>
         )}
-
-        {/* console.log("spotDetail ID ====>", spotDetail.Owner.id)
-  console.log("USERID ====>", spotReviewArr[0].User.id) */}
-        {/* <div>
-        {spotDetail.numReviews > 0 ? (
-          <div className="reviews-list">
-
-            {spotDetail.reviews.map((review, index) => (
-          <div key={index} className="review-item">
-            <p>
-              {review.reviewer.firstName}, {getFormattedDate(review.postedDate)}
-            </p>
-            <p>{review.comment}</p>
-          </div>
-        ))}
-          </div>
-        ) : (
-          <div className="no-reviews">
-
-            {currentUser && !isOwner && <p>Be the first to post a review!</p>}
-          </div>
-        )}
-      </div> */}
       </div>
     </div>
   );

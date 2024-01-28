@@ -4,9 +4,55 @@
      align-items: center;
      text-align: left;
      padding: 20px;
+     color: #ccd0cf;
+   }
+
+   .title-container{
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+
+   .h1{
+    margin: 3px;
+    letter-spacing: 5px;
+    color: #00ffbf;
+   }
+
+   .h3{
+    margin: 50px 3px 5px ;
+    left: -6px;
+    position: relative;
+    color: #00ffbf;
    }
 
    .form-container {
      width: 100%;
      max-width: 600px; /* 设置一个最大宽度，以防止表单在大屏幕上过宽 */
    }
+
+   .first-four-input{
+
+   }
+
+   .country-label{
+    position: relative;
+    top: -15px;
+   }
+
+   .address-label{
+    position: relative;
+    top: 5px;
+   }
+.city-state{
+  justify-content: space-between;
+  display: flex;
+  padding: 25px 0 0 0;
+}
+
+.lat-lng{
+  justify-content: space-between;
+  display: flex;
+  padding: 25px 0 0 0;
+}
