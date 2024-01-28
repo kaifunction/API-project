@@ -112,7 +112,7 @@ function SpotEdit() {
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="country"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "580px", height: "30px",  margin: "5px 0" }}
               />
             </label>
             {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
@@ -125,7 +125,7 @@ function SpotEdit() {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Address"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "580px", height: "30px",  margin: "5px 0" }}
               />
             </label>
             {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
@@ -143,6 +143,7 @@ function SpotEdit() {
                   placeholder="City"
                   style={{
                     width: "380px",
+                    height: "30px",
                     position: "relative",
                     left: "-14px",
                     top: "5px",
@@ -164,6 +165,7 @@ function SpotEdit() {
                   placeholder="State"
                   style={{
                     width: "169px",
+                    height: "30px",
                     position: "relative",
                     left: "-14px",
                     top: "5px",
@@ -185,6 +187,7 @@ function SpotEdit() {
                   placeholder="Latitude"
                   style={{
                     width: "380px",
+                    height: "30px",
                     position: "relative",
                     left: "0px",
                     top: "5px",
@@ -203,6 +206,7 @@ function SpotEdit() {
                   placeholder="Longitude"
                   style={{
                     width: "159px",
+                    height: "30px",
                     position: "relative",
                     left: "21px",
                     top: "5px",
@@ -225,7 +229,7 @@ function SpotEdit() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Please write at least 30 characters"
-              style={{ width: "580px", height: "100px" }}
+              style={{ width: "580px", height: "100px"}}
             ></textarea>
             {errors.description && (
               <p style={{ color: "red" }}>{errors.description}</p>
@@ -244,7 +248,7 @@ function SpotEdit() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name of your spot"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "580px", height: "30px",  margin: "5px 0" }}
               />
             </label>
             {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
@@ -263,7 +267,7 @@ function SpotEdit() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price per night (USD)"
-                style={{ width: "575px", margin: "5px 0" }}
+                style={{ width: "575px", height: "30px",  margin: "5px 0" }}
               />
             </label>
             {errors.price && <p style={{ color: "red" }}>{errors.price}</p>}

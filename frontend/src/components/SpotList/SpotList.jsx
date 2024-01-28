@@ -30,7 +30,7 @@ function SpotList() {
               <img
                 src={eachSpot.previewImage}
                 alt={eachSpot.name}
-                style={{ width: "320px", height: "200px" }}
+                style={{ width: "430px", height: "260px" }}
               />
 
               <div className="text-container">

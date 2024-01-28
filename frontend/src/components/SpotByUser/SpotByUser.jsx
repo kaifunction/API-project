@@ -45,7 +45,7 @@ function SpotByUser() {
       <div className="manage-header">
         <h1 className="manage-title h1">Manage Your Spots</h1>
         <button onClick={handleCreateSpot}
-        className="create-spot-button-manage">Create a New Spot</button>
+        className="create-spot-button-manage" style={{padding:"8px 20px"}}>Create a New Spot</button>
       </div>
 
       <div className="manage-images-container">
@@ -83,13 +83,13 @@ function SpotByUser() {
             </NavLink>
             <div className="buttons">
 
-                <button onClick={(e) => handleUpdate(e, spot.id)} className="update-button" style={{cursor: "pointer"}}>
+                <button onClick={(e) => handleUpdate(e, spot.id)} className="update-button" style={{cursor: "pointer", padding:"8px 20px"}}>
                   Update
                 </button>
 
               {/* <div className="delete-button"> */}
                 <button onClick={handleDelete}
-                className="delete-button" style={{cursor: "pointer"}}>
+                className="delete-button" style={{cursor: "pointer", padding:"8px 20px"}}>
                   <OpenModalMenuItem
                     itemText="Delete"
                     //     onItemClick={closeMenu}

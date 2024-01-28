@@ -149,7 +149,7 @@ function CreateSpot() {
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="country"
-                style={{ width: "580px", margin: "5px 0"}}
+                style={{ width: "580px", height: "30px", margin: "5px 0"}}
               />
             </label>
             {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
@@ -162,7 +162,7 @@ function CreateSpot() {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Address"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "580px", height: "30px", margin: "5px 0" }}
               />
             </label>
             {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
@@ -180,6 +180,7 @@ function CreateSpot() {
                   placeholder="City"
                   style={{
                     width: "380px",
+                    height: "30px",
                     position: "relative",
                     left: "-14px",
                     top: "5px",
@@ -200,7 +201,7 @@ function CreateSpot() {
                   onChange={(e) => setState(e.target.value)}
                   placeholder="State"
                   style={{
-                    width: "169px",
+                    width: "169px", height: "30px",
                     position: "relative",
                     left: "-14px",
                     top: "5px",
@@ -222,6 +223,7 @@ function CreateSpot() {
                     placeholder="Latitude"
                     style={{
                       width: "380px",
+                      height: "30px",
                       position: "relative",
                       left: "0px",
                       top: "5px",
@@ -240,6 +242,7 @@ function CreateSpot() {
                     placeholder="Longitude"
                     style={{
                       width: "159px",
+                      height: "30px",
                       position: "relative",
                       left: "21px",
                       top: "5px",
@@ -262,7 +265,7 @@ function CreateSpot() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Please write at least 30 characters"
-              style={{ width: "580px", height: "100px" }}
+              style={{ width: "580px", height: "150px"}}
             ></textarea>
             {errors.description && (
               <p style={{ color: "red" }}>{errors.description}</p>
@@ -281,7 +284,7 @@ function CreateSpot() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name of your spot"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "580px", height: "30px",  margin: "5px 0" }}
               />
             </label>
             {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
@@ -301,7 +304,7 @@ function CreateSpot() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price per night (USD)"
-                style={{ width: "575px", margin: "5px 0" }}
+                style={{ width: "575px", height: "30px",  margin: "5px 0" }}
               />
             </label>
             {errors.price && <p style={{ color: "red" }}>{errors.price}</p>}
@@ -315,7 +318,7 @@ function CreateSpot() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="Preview Image URL"
-              style={{ width: "580px", margin: "5px 0" }}
+              style={{ width: "580px", height: "30px",  margin: "5px 0" }}
             />
             {errors.url && <p style={{ color: "red" }}>{errors.url}</p>}
             <input
@@ -323,7 +326,7 @@ function CreateSpot() {
               value={image1}
               onChange={(e) => setImage1(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "580px", margin: "5px 0", position: "relative",
+              style={{ width: "580px", height: "30px",  margin: "5px 0", position: "relative",
               top: "5px"}}
             />
             {errors.image1 && <p style={{ color: "red" }}>{errors.image1}</p>}
@@ -332,7 +335,7 @@ function CreateSpot() {
               value={image2}
               onChange={(e) => setImage2(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "580px", margin: "5px 0", position: "relative",
+              style={{ width: "580px", height: "30px",  margin: "5px 0", position: "relative",
               top: "10px" }}
             />
             {errors.image2 && <p style={{ color: "red" }}>{errors.image2}</p>}
@@ -341,7 +344,7 @@ function CreateSpot() {
               value={image3}
               onChange={(e) => setImage3(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "580px", margin: "5px 0", position: "relative",
+              style={{ width: "580px", height: "30px",  margin: "5px 0", position: "relative",
               top: "15px" }}
             />
             {errors.image3 && <p style={{ color: "red" }}>{errors.image3}</p>}
@@ -350,15 +353,15 @@ function CreateSpot() {
               value={image4}
               onChange={(e) => setImage4(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "580px", margin: "5px 0", position: "relative",
+              style={{ width: "580px", height: "30px",  margin: "5px 0", position: "relative",
               top: "20px" }}
             />
           </div>
           {errors.image4 && <p style={{ color: "red" }}>{errors.image4}</p>}
 
-          <div className="submit-button" >
+          <div className="submit-button" style={{paddingBottom: "120px"}}>
             <button type="submit" style={{position: "relative",
-              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"3px"}}>Create Spot</button>
+              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"3px 20px"}}>Create Spot</button>
           </div>
         </form>
       </div>
