@@ -83,9 +83,9 @@
   background-color: #89deff;
 }
 
-.review-part {
+/* .review-part {
   align-items: flex-end;
-}
+} */
 
 .host-name-callout-box-container {
   display: flex;
@@ -128,7 +128,7 @@
 
 .review-part {
   position: absolute;
-  left: 155px;
+  left: 345px;
 }
 
 

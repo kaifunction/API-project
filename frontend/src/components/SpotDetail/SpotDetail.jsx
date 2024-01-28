@@ -185,18 +185,25 @@ function SpotDetail() {
               ? spotDetail.avgStarRating.toFixed(1)
               : "New"}
           </span>
-          <span style={{position: "relative", left:"15px"}}>{spotDetail.numReviews === 0 ? "" : "•"}</span>
-          <span style={{position: "relative", left:"20px"}}>
+
+          <span style={{ position: "relative", left: "15px" }}>
+            {spotDetail.numReviews === 0 ? "" : "•"}
+          </span>
+          <span style={{ position: "relative", left: "20px" }}>
             {spotDetail.numReviews === 0
               ? ""
               : `${spotDetail.numReviews} ${
                   spotDetail.numReviews === 1 ? "Review" : "Reviews"
                 }`}
           </span>
+
           <div className="post-review-button">
             {showPostReviewButton && (
               //     <button className="post-review-button">Post Your Review</button>
-              <button className="detail-post-review" style={{position: "relative", top:"10px"}}>
+              <button
+                className="detail-post-review"
+                style={{ position: "relative", top: "10px",padding:"8px 20px" }}
+              >
                 <OpenModalMenuItem
                   itemText="Post Your Review"
                   //     onItemClick={closeMenu}
@@ -207,47 +214,58 @@ function SpotDetail() {
           </div>
         </div>
 
-        {spotDetail.numReviews > 0 ? (
-          <div
-            className="review-container"
-            style={{ position: "relative", left: "-1015px", top: "80px", display: "flex", flexDirection: "column", gap: "20px"}}
-          >
-            {spotReviewArr.map((review, index) => (
-              <div key={index} className="text-container">
-                <span className="reviewer-firstname">
-                  {review.User.firstName}{" "}
-                  {new Date(review.createdAt).toLocaleDateString(
-                    "en-US",
-                    options
-                  )}
-                </span>
-                <p>{review.review}</p>
-                <div className="delete-review-button">
-                  {/* {console.log("reviewIdfromSPOTDETAIL===>", review.id)} */}
-                  {review?.User.id === currentUser?.id && (
-                    <button className="detail-delete-button">
-                      <OpenModalMenuItem
-                        itemText="Delete"
-                        //     onItemClick={closeMenu}
-                        modalComponent={
-                          <DeleteReviewModal reviewId={review.id} />
-                        }
-                      />
-                    </button>
-                  )}
+        <div className="review-container">
+          {spotDetail.numReviews > 0 ? (
+            <div
+              style={{
+                position: "relative",
+                left: "-1015px",
+                top: "80px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              {spotReviewArr.map((review, index) => (
+                <div key={index} className="text-container">
+                  <span className="reviewer-firstname">
+                    {review.User.firstName}{" "}
+                    {new Date(review.createdAt).toLocaleDateString(
+                      "en-US",
+                      options
+                    )}
+                  </span>
+                  <p>{review.review}</p>
+                  <div className="delete-review-button">
+                    {/* {console.log("reviewIdfromSPOTDETAIL===>", review.id)} */}
+                    {review?.User.id === currentUser?.id && (
+                      <button className="detail-delete-button" style={{padding:"8px 20px"}}>
+                        <OpenModalMenuItem
+                          itemText="Delete"
+                          //     onItemClick={closeMenu}
+                          modalComponent={
+                            <DeleteReviewModal reviewId={review.id} />
+                          }
+                        />
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="no-reviews" style={{position:"relative", right: "990px", top: "56px"}}>
-            {currentUser &&
-              spotReviewArr.length === 0 &&
-              spotDetail.Owner.id !== currentUser.id && (
-                <p>Be the first to post a review!</p>
-              )}
-          </div>
-        )}
+              ))}
+            </div>
+          ) : (
+            <div
+              className="no-reviews"
+              style={{ position: "relative", right: "990px", top: "56px" }}
+            >
+              {currentUser &&
+                spotReviewArr.length === 0 &&
+                spotDetail.Owner.id !== currentUser.id && (
+                  <p>Be the first to post a review!</p>
+                )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
