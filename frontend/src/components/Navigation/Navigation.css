@@ -15,7 +15,15 @@
 
 .dropdownLogout {
   margin-left: -120px;
-  padding-left: initial
+  padding-left: initial;
+  z-index: 100;
+  background-color: #11212d;
+  color: #00ffbf;
+  line-height: 25px;
+  right: 5px;
+  padding: 10px;
+  border: 2px solid #ccd0cf;
+  border-radius: 10px;
 }
 .buttonLoginSignupContainer{
   padding: 10px
@@ -30,9 +38,16 @@
   font-size: 12px;
   font-style: oblique;
   cursor: pointer;
-  border: 1px solid orangered;
+  border: 2px solid #ccd0cf;
   border-radius: 10px;
   line-height: 1.5;
+
+  top: 0px;
+  left: -10px;
+  position: relative;
+  z-index: 100;
+  background-color: #11212d;
+  color: #00ffbf;
   /* padding: 1px; */
 }
 
@@ -40,7 +55,43 @@
 
 .create-new-spot-button{
   margin-left: auto;
+  text-decoration: none;
 }
 /* .openModalButtonContainer {
 
 } */
+
+.activeN{
+  color:#00ffbf;
+}
+
+.loginbutton{
+  padding: 10px;
+  letter-spacing: 2px;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+.signupbutton{
+  padding:  10px;
+  letter-spacing: 2px;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+
+.manage-button {
+  background-color: #00ffbf;
+  border: 2px solid #ccd0cf;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 5px 0;
+}
+
+.logout-button{
+  background-color: #00ffbf;
+  border: 2px solid #ccd0cf;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 5px 0;
+}

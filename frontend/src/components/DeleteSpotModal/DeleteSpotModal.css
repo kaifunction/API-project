@@ -1,0 +1,48 @@
+#modal-content{
+     background-color: #11212d;
+     border-radius: 20px;
+}
+
+.delete-modal-container{
+     display: flex;
+     flex-direction: column;
+     background-color: #11212d;
+     justify-content: center;
+     align-items: center;
+     padding: 30px;
+     border-radius: 20px;
+     color: #00ffbf;
+}
+
+.confrim{
+     display: flex;
+     justify-content: center;
+}
+
+
+.button-container{
+     display: flex;
+     flex-direction: column;
+}
+
+.yes{
+     background-color: #ff5f50;
+     border: 2px solid #ccd0cf;
+     border-radius: 5px;
+     padding: 3px;
+     margin: 5px 0;
+     width: 300px;
+     padding: 10px;
+     margin: 10px;
+}
+
+.No{
+     background-color: #929292;
+     border: 2px solid #ccd0cf;
+     border-radius: 5px;
+     padding: 3px;
+     margin: 5px 0;
+     padding: 10px;
+     width: 300px;
+     margin: 10px;
+}

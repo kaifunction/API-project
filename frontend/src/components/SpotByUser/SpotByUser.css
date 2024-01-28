@@ -1,14 +1,17 @@
-
-
-.manage-images-container{
+.manage-images-container {
      display: flex;
      flex-direction: row;
+     flex-wrap: wrap;
      padding: 20px;
-     gap: 20px;
-
+     gap: 36px;
+     position: relative;
+     top: 80px;
 }
 
-
+.h1 {
+     color: #00ffbf;
+     text-transform: uppercase;
+}
 
 .buttons {
      display: flex;
@@ -16,4 +19,64 @@
      padding: 20px 0px;
      gap: 20px;
 
+}
+
+.manage-header {
+     position: relative;
+     left: 18px;
+     top: 30px;
+}
+
+.manage-title {
+}
+
+.create-spot-button-manage {
+     position: relative;
+     top: 30px;
+}
+
+.image-text{
+     display: flex;
+     flex-direction: column;
+     color: #00ffbf;
+}
+
+.text-line-one{
+     display: flex;
+     justify-content: space-between;
+}
+
+.star-review{
+     position: relative;
+     top: 23px;
+}
+
+.each-image-container {
+     background-color: #11212d;
+     padding: 20px;
+}
+
+.update-button {
+     background-color: #00ffbf;
+     border: 2px solid #ccd0cf;
+     border-radius: 5px;
+     padding: 3px;
+     margin: 5px 0;
+
+}
+
+.delete-button {
+     background-color: #00ffbf;
+     border: 2px solid #ccd0cf;
+     border-radius: 5px;
+     padding: 3px;
+     margin: 5px 0;
+}
+
+.create-spot-button-manage {
+     background-color: #00ffbf;
+     border: 2px solid #ccd0cf;
+     border-radius: 5px;
+     padding: 3px;
+     margin: 5px 0;
 }

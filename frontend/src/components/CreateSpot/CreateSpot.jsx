@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 // import { useSelector } from "react-redux";
 import { fetchPostSpotImage } from "../../store/newspotimage";
-import { fetchPostSpot } from '../../store/newspot';
+import { fetchPostSpot } from "../../store/newspot";
 import "./CreateSpot.css";
 import { useNavigate } from "react-router-dom";
 
@@ -87,7 +87,7 @@ function CreateSpot() {
       )
         .then((response) => {
           const images = [
-            { url, preview: true},
+            { url, preview: true },
             { url: image1, preview: false },
             { url: image2, preview: false },
             { url: image3, preview: false },
@@ -130,9 +130,9 @@ function CreateSpot() {
   return (
     <div className="page-container">
       <div className="title-container">
-        <h1>Create a new Spot</h1>
-        <h3>Where&apos;s your place located?</h3>
-        <p>
+        <h1 className="h1">CREATE A NEW SPOT</h1>
+        <h3 className="h3">Where&apos;s your place located?</h3>
+        <p className="p">
           Guests will only get your exact address once they booked a
           reservation.
         </p>
@@ -142,87 +142,117 @@ function CreateSpot() {
         <form onSubmit={handleSubmit}>
           <div className="first-four-input">
             {/* Country */}
-            <label>
+            <label className="country-label">
               Country
               <input
                 type="text"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="country"
-                style={{ width: "600px", margin: "5px 0" }}
+                style={{ width: "580px", margin: "5px 0"}}
               />
             </label>
             {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
 
             {/* Address */}
-            <label>
+            <label className="address-label">
               Street Address
               <input
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Address"
-                style={{ width: "600px", margin: "5px 0" }}
+                style={{ width: "580px", margin: "5px 0" }}
               />
             </label>
             {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
 
             <div className="city-state">
               {/* City */}
-              <label>
+              <label className="city-label">
                 City
+                <br />
+                <span style={{ paddingRight: "15px" }}></span>
                 <input
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="City"
+                  style={{
+                    width: "380px",
+                    position: "relative",
+                    left: "-14px",
+                    top: "5px",
+                  }}
                 />
+                <span  style={{position: "absolute"}}>, </span>
               </label>
-              {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
-              <span>, </span>
+              {errors.city && <p style={{ color: "red", position: "relative", top: "50px", left: "-400px"  }}>{errors.city}</p>}
 
               {/* State */}
-              <label>
+              <label className="state-label">
                 State
+                <br />
+                <span style={{ paddingRight: "15px" }}></span>
                 <input
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   placeholder="State"
+                  style={{
+                    width: "169px",
+                    position: "relative",
+                    left: "-14px",
+                    top: "5px",
+                  }}
                 />
               </label>
-              {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
+              {errors.state && <p style={{ color: "red", position: "relative", top: "50px", left: "-190px" }}>{errors.state}</p>}
             </div>
 
             <div className="lat-lng">
               {/* Latitude */}
-              <label>
-                Latitude
-                <input
-                  type="text"
-                  value={lat}
-                  onChange={(e) => setLat(e.target.value)}
-                  placeholder="Latitude"
-                />
-              </label>
-              {errors.lat && <p style={{ color: "red" }}>{errors.lat}</p>}
-              <span>, </span>
-              {/* Longitude */}
-              <label>
-                Longitude
-                <input
-                  type="text"
-                  value={lng}
-                  onChange={(e) => setLng(e.target.value)}
-                  placeholder="Longitude"
-                />
-              </label>
-              {errors.lng && <p style={{ color: "red" }}>{errors.lng}</p>}
+              <div className="lat-lng">
+                <label className="latitude-label">
+                  Latitude
+                  <input
+                    type="text"
+                    value={lat}
+                    onChange={(e) => setLat(e.target.value)}
+                    placeholder="Latitude"
+                    style={{
+                      width: "380px",
+                      position: "relative",
+                      left: "0px",
+                      top: "5px",
+                    }}
+                  />
+                <span style={{position: "absolute"}}>, </span>
+                </label>
+                {errors.lat && <p style={{ color: "red", position: "relative", top: "50px", left: "-387px" }}>{errors.lat}</p>}
+                {/* Longitude */}
+                <label className="longitude-label">
+                  Longitude
+                  <input
+                    type="text"
+                    value={lng}
+                    onChange={(e) => setLng(e.target.value)}
+                    placeholder="Longitude"
+                    style={{
+                      width: "159px",
+                      position: "relative",
+                      left: "21px",
+                      top: "5px",
+                    }}
+                  />
+                </label>
+                {errors.lng && <p style={{ color: "red", position: "relative", top: "50px", left: "-145px"  }}>{errors.lng}</p>}
+              </div>
             </div>
           </div>
 
           <div className="describe-container">
-            <h3>Describe your place to guests</h3>
+            <h3 className="h3">Describe your place to guests</h3>
             <p>
               Mention the best features of your space, any special amentities
               like fast wifi or parking, and what you love about the
@@ -232,7 +262,7 @@ function CreateSpot() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Please write at least 30 characters"
-              style={{ width: "600px", height: "100px" }}
+              style={{ width: "580px", height: "100px" }}
             ></textarea>
             {errors.description && (
               <p style={{ color: "red" }}>{errors.description}</p>
@@ -240,7 +270,7 @@ function CreateSpot() {
           </div>
 
           <div className="spot-name">
-            <h3>Create a title for your spot</h3>
+            <h3 className="h3">Create a title for your spot</h3>
             <p>
               Catch guests&apos; attention with a spot title that highlights
               what makes your place special.
@@ -251,40 +281,41 @@ function CreateSpot() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name of your spot"
-                style={{ width: "600px", margin: "5px 0" }}
+                style={{ width: "580px", margin: "5px 0" }}
               />
             </label>
             {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
           </div>
 
           <div className="base-price">
-            <h3>Set a base price for your spot</h3>
+            <h3 className="h3">Set a base price for your spot</h3>
             <p>
               Competitive pricing can help your listing stand out and rank
               higher in search results.
             </p>
             <label>
               $
+              <span style={{ paddingRight: "5px" }}></span>
               <input
                 type="text"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price per night (USD)"
-                style={{ width: "580px", margin: "5px 0" }}
+                style={{ width: "575px", margin: "5px 0" }}
               />
             </label>
             {errors.price && <p style={{ color: "red" }}>{errors.price}</p>}
           </div>
 
           <div className="spot-image">
-            <h3>Liven up your spot with photos</h3>
+            <h3 className="h3">Liven up your spot with photos</h3>
             <p>Submit a link to at least one photo to publish your spot.</p>
             <input
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="Preview Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
+              style={{ width: "580px", margin: "5px 0" }}
             />
             {errors.url && <p style={{ color: "red" }}>{errors.url}</p>}
             <input
@@ -292,7 +323,8 @@ function CreateSpot() {
               value={image1}
               onChange={(e) => setImage1(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
+              style={{ width: "580px", margin: "5px 0", position: "relative",
+              top: "5px"}}
             />
             {errors.image1 && <p style={{ color: "red" }}>{errors.image1}</p>}
             <input
@@ -300,7 +332,8 @@ function CreateSpot() {
               value={image2}
               onChange={(e) => setImage2(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
+              style={{ width: "580px", margin: "5px 0", position: "relative",
+              top: "10px" }}
             />
             {errors.image2 && <p style={{ color: "red" }}>{errors.image2}</p>}
             <input
@@ -308,7 +341,8 @@ function CreateSpot() {
               value={image3}
               onChange={(e) => setImage3(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
+              style={{ width: "580px", margin: "5px 0", position: "relative",
+              top: "15px" }}
             />
             {errors.image3 && <p style={{ color: "red" }}>{errors.image3}</p>}
             <input
@@ -316,13 +350,15 @@ function CreateSpot() {
               value={image4}
               onChange={(e) => setImage4(e.target.value)}
               placeholder="Image URL"
-              style={{ width: "600px", margin: "5px 0" }}
+              style={{ width: "580px", margin: "5px 0", position: "relative",
+              top: "20px" }}
             />
           </div>
           {errors.image4 && <p style={{ color: "red" }}>{errors.image4}</p>}
 
-          <div className="submit-button">
-            <button type="submit">Create Spot</button>
+          <div className="submit-button" >
+            <button type="submit" style={{position: "relative",
+              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"3px"}}>Create Spot</button>
           </div>
         </form>
       </div>

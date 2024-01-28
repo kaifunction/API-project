@@ -1,11 +1,21 @@
 .spot-list-container {
      display: flex;
      flex-wrap: wrap;
-     align-items: center;
+     justify-content: flex-start;
+     align-items: baseline;
      gap: 10px;
      padding-top: 10px;
 }
 
+.nav-link{
+     text-decoration: none;
+}
+
+
+
+.active{
+     color:#00ffbf;
+}
 
 .spot-tile {
      width: 24%;
@@ -13,6 +23,9 @@
      box-sizing: border-box;
      padding: 10px;
      /* 可选，添加内边距以调整内容与边框的距离 */
+     background-color: #11212d;
+     margin: 10px 2px;
+     overflow: hidden;
 }
 
 .spot-tile img {
@@ -23,28 +36,37 @@
      cursor: pointer
 }
 
+.text-container{
+     font-size: 14px;
+
+}
+
+
+.city-rating-line{
+     display: flex;
+     justify-content: space-between;
+
+}
 
 .tooltip {
      position: relative;
+     top: 0;
      display: flex;
 }
 
 .tooltip .tooltiptext {
-     font-size: 10px;
+     font-size: 15px;
      display: none;
      visibility: hidden;
-     width: 120px;
-     background-color: #555;
+     width: 200px;
+     background-color: #11212d;
      color: #fff;
      text-align: center;
      border-radius: 5px;
-     padding: 5px;
+     padding: 8px;
      position: absolute;
-     z-index: 1;
-     left: 10%;
-     margin-left: 1px;
-     opacity: 0;
-     transition: opacity 0.3s;
+     left: -2px;
+     top: -8px;
 }
 
 .tooltip:hover .tooltiptext {

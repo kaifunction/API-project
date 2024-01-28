@@ -93,11 +93,11 @@ function PostReviewModal() {
                 <i className="fa fa-star"></i>
               </div>
             ))}
-            <label>Stars</label>
+            <label style={{marginLeft: "10px"}}>Stars</label>
           </div>
 
           <div className="review-post-button">
-            <button disabled={review.length < 10 || stars === 0}>
+            <button disabled={review.length < 10 || stars === 0} className="submit-review-button">
               Submit Your Review
             </button>
           </div>

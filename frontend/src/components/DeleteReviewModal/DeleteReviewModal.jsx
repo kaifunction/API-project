@@ -1,14 +1,20 @@
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteReview } from "../../store/review"
 
 function DeleteReviewModal({ reviewId }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  console.log("reviewIdfromdeleteModal===>", reviewId);
-  const handledelete = (e) => {
-        e.preventDefault();
-    dispatch(fetchDeleteReview(reviewId));
+  // console.log("reviewIdfromdeleteModal===>", reviewId);
+  const spotId = useSelector(state => state.spots?.spot?.id)
+  // console.log(spotId)
+
+  const handledelete = () => {
+        // e.preventDefault();
+    dispatch(fetchDeleteReview(reviewId)).then(() => {
+      // 在成功删除后，使用 window.location.href 导航到 "/spots/current"
+      window.location.href = `/spots/${spotId}`;
+    });
     closeModal();
   };
 
