@@ -16,7 +16,7 @@ function SpotByUser() {
   // console.log("currentUser=====>", currentUserId)
   const currentUserSpot = useSelector((state) => state.getspots.spot.Spots);
 
-  console.log("currentUserSpot=====>", currentUserSpot);
+  // console.log("currentUserSpot=====>", currentUserSpot);
 
   useEffect(() => {
     dispatch(fetchGetSpotsById());
