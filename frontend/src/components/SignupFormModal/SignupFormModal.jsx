@@ -127,7 +127,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit" disabled={!email.length || username.length < 4 || !lastName.length || !firstName.length || password.length < 6 || confirmPassword.length < 6} className='signup-button'>Sign Up</button>
+        <button type="submit" disabled={!email.length || username.length < 4 || !lastName.length || !firstName.length || password.length < 6 || confirmPassword.length < 6} className='signup-button'  style={{cursor: "pointer"}}>Sign Up</button>
       </form>
     </div>
   );

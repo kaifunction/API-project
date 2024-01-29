@@ -97,7 +97,7 @@ function PostReviewModal() {
           </div>
 
           <div className="review-post-button">
-            <button disabled={review.length < 10 || stars === 0} className="submit-review-button">
+            <button disabled={review.length < 10 || stars === 0} className="submit-review-button" style={{cursor: "pointer"}}>
               Submit Your Review
             </button>
           </div>

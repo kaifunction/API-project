@@ -275,7 +275,7 @@ function SpotEdit() {
 
           <div className="submit-button" style={{paddingBottom: "100px"}}>
             <button type="submit" style={{position: "relative",
-              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"8px 20px"}}>Update your Spot</button>
+              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"8px 20px", cursor: "pointer"}}>Update your Spot</button>
           </div>
         </form>
       </div>

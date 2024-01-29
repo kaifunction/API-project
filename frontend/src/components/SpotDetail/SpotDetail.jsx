@@ -202,7 +202,7 @@ function SpotDetail() {
               //     <button className="post-review-button">Post Your Review</button>
               <button
                 className="detail-post-review"
-                style={{ position: "relative", top: "10px",padding:"8px 20px" }}
+                style={{ position: "relative", top: "10px",padding:"8px 20px", cursor: "pointer" }}
               >
                 <OpenModalMenuItem
                   itemText="Post Your Review"
