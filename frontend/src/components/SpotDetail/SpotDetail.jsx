@@ -174,7 +174,7 @@ function SpotDetail() {
           margin: "40px 0",
         }}
       ></span>
-      <div className="bottom-column">
+      <div className="bottom-column" style={{paddingBottom: "150px"}}>
         <div className="review-part">
           <span>
             <i
@@ -227,7 +227,7 @@ function SpotDetail() {
               }}
             >
               {spotReviewArr.map((review, index) => (
-                <div key={index} className="text-container">
+                <div key={index} className="text-container" style={{position: "relative", left: "-15px"}}>
                   <span className="reviewer-firstname">
                     {review.User.firstName}{" "}
                     {new Date(review.createdAt).toLocaleDateString(
