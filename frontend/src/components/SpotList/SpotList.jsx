@@ -7,9 +7,9 @@ import "./SpotList.css";
 function SpotList() {
   const dispatch = useDispatch();
   const spots = useSelector((state) => state.spots);
-  const currentUser = useSelector((state) => state.session.user);
+  // const currentUser = useSelector((state) => state.session.user);
 
-  console.log("currentUser===>", currentUser);
+  // console.log("currentUser===>", currentUser);
 
   const spotsArray = spots.spot.Spots;
   // console.log('spotsArray===>',spotsArray[0])

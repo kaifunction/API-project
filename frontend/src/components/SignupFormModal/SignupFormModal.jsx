@@ -46,6 +46,8 @@ function SignupFormModal() {
   return (
     <div className='signup-container'>
       <h1 className='h1 signupH1'>Sign Up</h1>
+      {errors.email && <p style={{color:"red", position:"relative", top: "-15px", left: "20px"}}>{errors.email}</p>}
+      {errors.username && <p style={{color:"red", position:"relative", top: "-15px", left: "20px"}}>{errors.username}</p>}
       <form onSubmit={handleSubmit} className='signup-form'>
         <label className='signup-email'>
           Email
@@ -59,7 +61,7 @@ function SignupFormModal() {
             style={{width: "250px", margin: "5px 0", padding: "5px"}}
           />
         </label>
-        {errors.email && <p style={{color:"red", position:"relative", top: "-15px"}}>{errors.email}</p>}
+
         <label className='signup-username'>
           Username
           <br/>
@@ -72,7 +74,7 @@ function SignupFormModal() {
             style={{width: "250px", margin: "5px 0", padding: "5px"}}
           />
         </label>
-        {errors.username && <p style={{color:"red", position:"relative", top: "-15px"}}>{errors.username}</p>}
+
         <label className='signup-firstname'>
           First Name
           <br/>
