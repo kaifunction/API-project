@@ -361,7 +361,7 @@ function CreateSpot() {
 
           <div className="submit-button" style={{paddingBottom: "120px"}}>
             <button type="submit" style={{position: "relative",
-              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"3px 20px"}}>Create Spot</button>
+              top: "30px", backgroundColor: "#00ffbf", borderRadius: "5px", padding:"3px 20px", cursor:"pointer"}}>Create Spot</button>
           </div>
         </form>
       </div>

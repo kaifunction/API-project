@@ -69,11 +69,11 @@ function ProfileButton({ user }) {
             <span>{user.email}</span>
             <br/>
             <span>
-              <button onClick={manageSpots} className="manage-button">Manage Spots</button>
+              <button onClick={manageSpots} className="manage-button" style={{cursor: "pointer"}}>Manage Spots</button>
             </span>
             <br/>
             <span>
-              <button onClick={logout} className="logout-button">Log Out</button>
+              <button onClick={logout} className="logout-button" style={{cursor: "pointer"}}>Log Out</button>
             </span>
           </>
         ) : (
